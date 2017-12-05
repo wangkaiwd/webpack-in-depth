@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.块级作用域
+        // es6新增let命令用来声明变量，所声明的变量只在let所在的代码块内有效
+        // 代码块（俩个花括号之间）
+        // {
+        //     let a = 10;
+        //     var b = 1;
+        // }
+        // alert(a); //报错 Uncaught ReferenceError: a is not defined;
+        // alert(b); // 1
+
+        // 2.解决for循环传值问题
+        // for循环的计数器很适合let命令,解决循环的i值问题
+        // var a = [];
+        // for (var i=0;i<10;i++) {
+        //     a[i] = function () {
+        //         console.log(i);
+        //     }
+        // }
+        // a[6]();
+        // let a = [];
+        // for (let i=0;i<10;i++) {
+        //     a[i] = function () {
+        //         console.log(i);
+        //     }
+        // }
+        // a[6]();//打印6,如果使用var打印10
+        // for循环特别之处：循环语句部分是一个父作用域，而循环体内部是一个单独的子作用域
+        // for(let i=0;i<3;i++) {
+        //     // 函数内部的i和外部的i是分离的
+        //     let i = 'abc';
+        //     console.log(i);
+        //     // abc
+        //     // abc
+        //     // abc
+        // }
+
+        // 3.不存在变量声明提升
+        // let命令改变了语法行为，它所声明的变量一定要在声明后使用，否则报错
+        // var的情况
+        // console.log(foo); // undefined;
+        // var foo = 2;
+        // // let的情况
+        // console.log(bar); // 报错：Uncaught ReferenceError
+        // let bar = 2;
+        // var x = x;
+        // console.log(x);
+
+        // 4. 不允许重复声明
+        // 不能在函数内部重新声明参数
+        function fn(arg){
+            let arg; // 报错
+        }
+    </script>
+</body>
+</html>
