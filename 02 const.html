@@ -12,7 +12,7 @@
         // 基本用法：const:constant的简写（常量）
         // 1.一但声明值不可更改
         // const PI = 3.14;
-        // Uncaught TypeError:Assignment to constant variable
+        // // Uncaught TypeError:Assignment to constant variable
         // PI = 3;// 报错 
 
         // 2.一但声明必须赋值（初始化）
@@ -41,7 +41,7 @@
         // foo.prop = 123;
         // console.log(123);
         // // 将foo指向另一个对象，此时foo的地址发生了变化
-        // foo = {};//报错：Assignment to constant variable
+        foo = {};//报错：Assignment to constant variable
         const a = [];
         a.push('hello'); //可执行
         a.length = 0; 

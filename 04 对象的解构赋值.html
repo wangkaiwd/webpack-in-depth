@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let {bar,foo} = {foo:'aaa',bar:'bbb'};
+        // // 相当于 let {bar:bar,foo:foo}
+        // console.log(foo); // aaa
+        // console.log(bar); // bbb
+        // // 对象的属性没有次序，变量必须要与属性同名，才能取到正确的值
+
+        // let {baz} = {foo:'aaa',bar:'bbb'};
+        // console.log(baz); // undefined
+
+        // // 如果变量名和属性名不一致，必须写成
+        // var {foo:baz} = {foo:'aaa',bar:'bbb'};
+        // console.log(baz); // aaa
+        
+        // let obj = {first:'hello',last:'world'};
+        // 真正被赋值的是 f和l
+        // let {first:f,last:l} = obj;
+        // console.log(f); // hello
+        // console.log(l); // world
+
+        // 对象解构赋值的内部机制
+        // 先找到同名的属性，然后再赋值给对应的变量。
+
+        // let foo;
+        // let {foo} = {foo:1};
+
+        // 对使用let定义的变量进行解构赋值
+ 
+    </script>
+</body>
+</html>
