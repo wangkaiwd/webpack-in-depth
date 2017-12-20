@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// 1.定义：
+		// es6:允许按照一定的模式，从数组和对象中提取值，对变量进行
+		// 赋值，这被称为解构
+
+		// 2. 基本用法 
+		// let [a,b,c] = [1,2,3]
+		// 相当于let a=1; let b=2; let c=3;
+		// 可以从数组中提取值，按照对应位置，对变量赋值
+
+		// 3. 模式匹配：只要等号俩边的模式相同，左边的变量就会赋予对应的值
+		// let [foo,[[bar],baz]] = [1,[[2],3]];
+		// console.log(foo,bar,baz);
+		// let [head, ...tail] = [1, 2, 3, 4];
+		// console.log(head); // 1
+		// console.log(tail); // [2,3,4]
+		// let [x, y, ...z] = ['a'];
+		// console.log(x); // a
+		// // 数组中未定义的一项值为undefined
+		// console.log(y); // undefined
+		// console.log(z); // []
+
+		// 4. 解构不成功,变量的值为undefined
+		// let [foo] = [];
+		// let [bar,foo] = [1];
+		// foo解构不成功，值为undefined;
+
+		// 5.  不完全解构
+		// 		等号左边的模式，只匹配一部分的等号右边的数组。
+		// let [x,y] = [1,2,3];
+		// console.log(x);// 1
+		// console.log(y);// 2
+
+		// let [a,[b],d] = [1,[2,3],4];
+		// console.log(a); // 1
+		// console.log(b); // 2
+		// console.log(d); // 4
+
+		// 6. 解构赋值允许指定默认值
+		let [foo=true] = [];
+		console.log(foo); // true
+
+		let [x,y='b'] = ['a'];
+		console.log(x); // 'a'
+		console.log(y); // 'b'
+	</script>
+</body>
+</html>

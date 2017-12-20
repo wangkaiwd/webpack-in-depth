@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>const命令</title>
+</head>
+<body>
+    <script>
+        // 常量一般大写
+        // 基本用法：const:constant的简写（常量）
+        // 1.一但声明值不可更改
+        // const PI = 3.14;
+        // // Uncaught TypeError:Assignment to constant variable
+        // PI = 3;// 报错 
+
+        // 2.一但声明必须赋值（初始化）
+        // const foo; 
+        // SyntaxError:Missing initializer in const declaration
+
+        // 3. 只在声明所在的块级作用域内有效
+        // if (true) {
+        //     const MAX = 5;
+        // }
+        // console.log(MAX);
+        // 4. 不存在声明提升：暂时性死区：只能在声明的位置后面使用
+        // if(true){
+        //     console.log(MAX);
+        //     const MAX = 5;
+        // }
+
+        // 5. 不可重复声明
+        // let age = 25;
+        // const age = 30;
+
+        // 6. 将一个对象声明为常量时必须非常小心
+        // foo对象本身是可变的，不可变的是foo指向的地址
+        // const foo = {};
+        // // 为foo添加属性，foo的地址并没有变化
+        // foo.prop = 123;
+        // console.log(123);
+        // // 将foo指向另一个对象，此时foo的地址发生了变化
+        foo = {};//报错：Assignment to constant variable
+        const a = [];
+        a.push('hello'); //可执行
+        a.length = 0; 
+        // 将一个新的数组赋值给a，a的地址发生了改变
+        a = ['Dave']; // 报错
+
+    </script>
+</body>
+</html>
