@@ -36,15 +36,28 @@
         // 变为resolved时调用（成功时的回调），第二个回调函数是promise对象的状态变为reject时调用（失败时的回调）
 
         // promise对象的简单例子
-        function timeout(ms) {
-            return new Promise((resolve,reject)=>{
-                setTimeout(resolve,ms,'done');
-            });
-        }
+        // function timeout(ms) {
+        //     return new Promise((resolve,reject)=>{
+        //         setTimeout(resolve,ms,'done');
+        //     });
+        // }
         // 调用函数
-        timeout(1000).then((value)=>{
-            console.log(value);
-        });
+        // timeout(1000).then((value)=>{
+        //     console.log(value);
+        // });
+
+        // Promise新建后就会立即执行
+        // let promise = new Promise(function(resolve,reject){
+        //     console.log('Promise');
+        //     resolve();
+        // });
+        // then方法指定的回调函数，将在当前脚本所有同步任务执行完才会执行，
+        // 所以"Resolved"最后输出
+        // promise.then(function(){
+        //     console.log('Resolved.');
+        // });
+
+        // console.log('Hi!');
         
     </script>
 </body>

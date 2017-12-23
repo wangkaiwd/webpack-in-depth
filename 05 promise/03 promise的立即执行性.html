@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let promise = new Promise(function(resolve,reject){
+            console.log('create a promise');
+            resolve("success");
+        })
+        console.log('after new Promise');
+
+        promise.then(function(value){
+            console.log(value);
+        });
+
+        // success Promise参数传入的函数会被立即执行，只是其中
+        // "执行的代码可以是异步代码"
+        // "after new Promise"
+        // "success"
+    </script>
+</body>
+</html>
