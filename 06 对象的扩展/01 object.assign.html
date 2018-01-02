@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // object.assign方法用于对象的合并，将源对象（source）的所有
+        // 可枚举属性，复制到目标对象（target）
+        // let target = {a:1};
+        // let source1 = {b:2,c:3};
+        // let copy = Object.assign(target,source1);
+        // console.log(copy); //{a:1,b:2,c:3}
+
+        // let obj1 = {a:0,b:{c:0}};
+        // let obj2 = Object.assign({},obj1);
+        // console.log(obj2);
+        // obj1.a = 1;
+        // // deep clone
+        // console.log(obj2); // {a:0,b:{c:0}}
+
+        object.assign()是深拷贝
+        浅拷贝：只会将对象的各个属性进行依次复制，并不会进行递归复制。
+               浅复制会导致对象中的属性对应的属性值为复杂数据类型的元素
+               指向同一片内存空间
+        深拷贝：
+    </script>
+</body>
+</html>
