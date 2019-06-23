@@ -4,3 +4,6 @@
 
 接下来我们再看一下官网的定义：  
 > A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through "loaders", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.
+
+用我比较拙劣的英文水平翻译成中文大概是这样： 
+> 一个`javascript`打包工具。分析代码结构，将资源打包成有相互依赖关系的模块。`Webpack`可以通过代码分割来按需加载你的应用，也可以通过加载器(`loader`)使CommonJs, AMD, ES6 模块化, CSS, Image, JSON, Coffeescript, LESS以及你自定义的一些东西可以在浏览器直接运行。
