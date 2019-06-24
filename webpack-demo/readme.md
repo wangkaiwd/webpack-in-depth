@@ -29,3 +29,5 @@ module.exports = {
   "bundle:dev": "webpack --config webpack.config.dev.js" 
 },
 ```
+
+`webpack-cli`的作用： 可以在命令行中使用`webpack`命令
