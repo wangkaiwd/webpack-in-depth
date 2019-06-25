@@ -1,5 +1,5 @@
-### 最简单的打包操作
-#### 安装
+## 最简单的打包操作
+### 安装
 在使用`webpack`之前我们要安装`webpack`,安装命令如下：  
 ```npm
 # 创建webpack-demo文件夹
@@ -11,7 +11,7 @@ yarn add webpack webpack-cli -D
 ```
 这里我们安装`webpack-cli`的原因是因为它可以让我们可以在命令行中运行`webpack`,否则`webpack`将无法运行
 
-#### 生成打包文件
+### 生成打包文件
 
 接下来我们再当前目录下新建几个文件来进行演示：  
 ```js
@@ -56,7 +56,7 @@ npx webpack main.js
 在浏览器中打开`html`文件，控制台中已经成功输出：  
 ![first-console](../screenshots/first-console.png)
 
-#### 使用配置文件
+### 使用配置文件
 使用命令行实现一些简单的`webpac`配置比较快捷，而实际项目中的`webpack`配置比较复杂，创建一个`webpack`配置文件来执行会更加高效。
 
 接下来我们在目录下新建`scr`目录，然后将源代码`demo1.js,demo2.js,main.js`移入进行集中管理。完成之后我们回到项目根目录，建立`webpack.config.js`文件来实现`webpack`的各种配置，并添加如下代码：  
@@ -80,7 +80,7 @@ npx webpack
 
 执行命令之后，可以成功看到和通过命令行执行完全一样的效果。
 
-#### `NPM`脚本(`NPM Scripts`)
+### `NPM`脚本(`NPM Scripts`)
 使用`CLI`这种方式来运行本地的`webpack`进行打包不是特别方便，我们可以设置一个快捷方式命令。在`package.json`中添加一个`script`来进行命令的简写：  
 ```json
 "scripts": {
