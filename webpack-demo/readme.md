@@ -93,4 +93,24 @@ npx webpack
 ```npm
 yarn build
 ```
-可以看到目录下又成功出现了打包好的文件，到这里我们完成了一次最简单的`webpack`打包。
+
+在打包的过程中一直有一个黄色的警告我们没有处理：  
+![mode-warning](../screenshots/mode-warning.png)
+
+这是由于我们再打包的时候没有为`webapck`来指定打包模式。指定对应的打包模式后`webpack`会使用相应模式的内置优化：  
+```js
+const path = require('path');
+module.exports = {
+  mode: 'production', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
+  // 简写：相当于 => entry: {main:'./src/main.js'}
+  entry: './src/main.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, './dist')
+  }
+}
+```
+
+可以看到目录下又成功出现了打包好的文件，并且命令行中没有警告，到这里我们完成了一次最简单的`webpack`打包。
+
+### 打包图片文件
