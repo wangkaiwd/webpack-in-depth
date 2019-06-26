@@ -9,14 +9,39 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /\.(png|jpg|jpeg|gif)$/, // 匹配 .png,.jpg,.jpeg,.gif结尾的文件
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         // placeholders: 
+      //         //  [ext] 资源扩展名, 默认file.extname
+      //         //  [name] 资源的基本名称, 默认file.basename
+      //         //  [path] 资源相对于context的路径,默认file.dirname
+      //         //  [hash] 内容的哈希值，默认md5
+      //         name: '[name]_[hash].[ext]', // 为你的文件配置自定义文件名模板，默认值：'[hash].[ext]'
+      //         outputPath: 'images/', // 为你的文件配置自定义的output输出目录：这里指定为打包目录下的images文件夹
+      //       }
+      //     }
+      //   ]
+      // },
+      // url-loader的功能类似于`file-loader`，但是在文件大小(单位byte)低于指定的限制时，可以返回一个DataURL(base64)
       {
         test: /\.(png|jpg|jpeg|gif)$/, // 匹配 .png,.jpg,.jpeg,.gif结尾的文件
         use: [
           {
-            loader: 'file-loader',
+            loader: 'url-loader',
             options: {
               // placeholders: 
+              //  [ext] 资源扩展名, 默认file.extname
+              //  [name] 资源的基本名称, 默认file.basename
+              //  [path] 资源相对于context的路径,默认file.dirname
+              //  [hash] 内容的哈希值，默认md5
               name: '[name]_[hash].[ext]', // 为你的文件配置自定义文件名模板，默认值：'[hash].[ext]'
+              outputPath: 'images/', // 为你的文件配置自定义的output输出目录：这里指定为打包目录下的images文件夹
+              // 当限制的数值过大时，会返回很大的base64字符串
+              limit: 8192, // 单位`byte`,文件小于8192kb时返回base64文件，大于这个限制时会返回地址
             }
           }
         ]
