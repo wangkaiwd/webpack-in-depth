@@ -48,7 +48,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        // 解析css文件的时候要用到2个loader
+        // css-loader: 会帮我们分析出几个css文件之间的关系,最终把css合并成一个css文件
+        // style-loader: 会将css-loader最终合成的css挂载到head下的style标签里
+        // 所以是通过style标签添加css的一种方式
+        use: ['style-loader','css-loader','sass-loader']
       }
     ]
   }
