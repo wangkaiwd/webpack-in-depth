@@ -114,3 +114,29 @@ module.exports = {
 可以看到目录下又成功出现了打包好的文件，并且命令行中没有警告，到这里我们完成了一次最简单的`webpack`打包。
 
 ### 打包图片文件
+我们在`src`目录下加入一个图片： `avatar.jpeg`,然后再通过`yarn build`命令对代码进行打包，结果`webpack`打包出错：  
+![avatar-error](../screenshots/avatar-error.png)
+
+这段报错的大概意思是说我们没有一个合适的`loader`来处理图片文件。接下来我们就来介绍一下`webpack`的`loader`的作用。
+
+`loader`用于对模块的源代码进行转换。当我们使用图片或者`CSS`等文件时，`webpack`并不能识别这些文件，通过为这些文件配置对应的`loader`就可以让`webpack`认识这些文件，从而可以在项目中进行开发使用。
+
+这里我们通过`file-loader`来让`webpack`处理图片文件: 
+```npm
+yarn add file-loader
+```
+```js
+// webpack.config.js
+module: {
+  rules: [
+    {
+      test: /\.(png|jpg|jpeg|gif)$/, // 匹配 .png,.jpg,.jpeg,.gif结尾的文件
+      use: [
+        {
+          loader: 'file-loader'
+        }
+      ]
+    }
+  ]
+}
+```
