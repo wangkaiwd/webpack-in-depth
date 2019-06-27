@@ -47,6 +47,10 @@ module.exports = {
         ]
       },
       {
+        test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+        use: 'file-loader'
+      },
+      {
         test: /\.(css|scss)$/,
         // 解析css文件的时候要用到2个loader
         // css-loader: 会帮我们分析出几个css文件之间的关系,最终把css合并成一个css文件
@@ -60,7 +64,7 @@ module.exports = {
               // 用于配置css-loader作用于@import的资源之前有多少个loader,确保对每个文件都应用postcss-loader和sass-loader
               importLoaders: 2,
               // 开启css模块化
-              modules: true
+              // modules: true
             }
           },
           'postcss-loader',
