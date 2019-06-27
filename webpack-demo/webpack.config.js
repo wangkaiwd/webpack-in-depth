@@ -52,7 +52,20 @@ module.exports = {
         // css-loader: 会帮我们分析出几个css文件之间的关系,最终把css合并成一个css文件
         // style-loader: 会将css-loader最终合成的css挂载到head下的style标签里
         // 所以是通过style标签添加css的一种方式
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // 用于配置css-loader作用于@import的资源之前有多少个loader,确保对每个文件都应用postcss-loader和sass-loader
+              importLoaders: 2,
+              // 开启css模块化
+              modules: true
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
         // 在webpack中，loader的执行是有顺序的：从下到上，从右到左
         // 举例：打包sass文件时，会先通过sass-loader将scss文件处理成css文件，然后通过postcss-loaer为css规则添加供应商前缀，
         // 之后css问文件将所有css合并到一起通过style-loader以style标签的
