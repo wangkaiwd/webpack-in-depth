@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 module.exports = {
   mode: 'production', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
@@ -48,7 +49,15 @@ module.exports = {
       },
       {
         test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
-        use: 'file-loader'
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]_[hash].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
       },
       {
         test: /\.(css|scss)$/,
@@ -76,5 +85,13 @@ module.exports = {
         // 方式挂载到html页面中，实现样式的更改
       }
     ]
-  }
+  },
+  plugins: [
+    // HtmlWebpackPlugin插件会在打包结束后，自动生成一个html文件，并把打包生层的js文件自动引入到html中.
+    // 这对于在文件名中包含每次会随着编译而发生变化哈希的webpack bundle（webpack打包文件）尤其有用
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './index.html'
+    })
+  ]
 }
