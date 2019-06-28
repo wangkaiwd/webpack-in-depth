@@ -31,3 +31,4 @@
     * `sass-loader`来解析`.scss`文件
     * 开启模块化`css`
 7. 在项目中使用字体图标
+8. 在项目中使用`HtmlWebpackPlugin`插件
