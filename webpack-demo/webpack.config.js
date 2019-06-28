@@ -3,9 +3,22 @@ const path = require('path');
 module.exports = {
   mode: 'production', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
   // 简写：相当于 => entry: {main:'./src/main.js'}
-  entry: './src/main.js',
+  // entry: './src/main.js',
+  entry: {
+    // 配置入口文件
+    main: './src/main.js',
+    sub: './src/main.js'
+  },
   output: {
-    filename: 'main.js',
+    // 对于单个入口起点，filename会是一个静态名称：filename: 'main.js'
+    // filename: 'main.js'
+
+    // 当通过多个入口起点、代码拆分(code splitting)或各种插件(plugin)创建多个bundle,应该使用以下方式，来赋予每个bundle一个唯一的名称
+    // HtmlWebpackPlugin也会分别为我们自动引入打包好的每一个模块
+    // 占位符placeholder: 
+    //  [name]: 模块名称
+    //  [hash]: 模块标识符(module identifier)的hash
+    filename: '[name]_[hash].js',
     path: path.resolve(__dirname, './dist')
   },
   module: {
