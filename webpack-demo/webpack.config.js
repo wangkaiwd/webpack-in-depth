@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require('path');
 module.exports = {
   mode: 'production', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
@@ -7,7 +8,7 @@ module.exports = {
   entry: {
     // 配置入口文件
     main: './src/main.js',
-    sub: './src/main.js'
+    // sub: './src/main.js'
   },
   output: {
     // 对于单个入口起点，filename会是一个静态名称：filename: 'main.js'
@@ -19,7 +20,10 @@ module.exports = {
     //  [name]: 模块名称
     //  [hash]: 模块标识符(module identifier)的hash
     filename: '[name]_[hash].js',
-    path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, './dist'),
+    // 指定在浏览器中所引用的此输出目录对应的公开URL:具体表现就是在html的script的scr的地址增加了publicPath前缀：
+    // https://cdn.example.com/assets/xxx
+    // publicPath: 'https://cdn.example.com/assets/'
   },
   module: {
     rules: [
@@ -100,11 +104,12 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     // HtmlWebpackPlugin插件会在打包结束后，自动生成一个html文件，并把打包生层的js文件自动引入到html中.
     // 这对于在文件名中包含每次会随着编译而发生变化哈希的webpack bundle（webpack打包文件）尤其有用
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html'
-    })
+    }),
   ]
 }
