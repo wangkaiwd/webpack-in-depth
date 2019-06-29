@@ -32,3 +32,4 @@
     * 开启模块化`css`
 7. 在项目中使用字体图标
 8. 在项目中使用`HtmlWebpackPlugin`插件
+9. 常用`entry`和`output`配置

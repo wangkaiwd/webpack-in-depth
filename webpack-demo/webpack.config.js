@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path');
 module.exports = {
-  mode: 'production', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
+  mode: 'development', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
   // 简写：相当于 => entry: {main:'./src/main.js'}
   // entry: './src/main.js',
   entry: {
@@ -104,7 +104,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     // HtmlWebpackPlugin插件会在打包结束后，自动生成一个html文件，并把打包生层的js文件自动引入到html中.
     // 这对于在文件名中包含每次会随着编译而发生变化哈希的webpack bundle（webpack打包文件）尤其有用
     new HtmlWebpackPlugin({
