@@ -25,6 +25,16 @@ module.exports = {
     // https://cdn.example.com/assets/xxx
     // publicPath: 'https://cdn.example.com/assets/'
   },
+  // sourceMap, source: 根源，本源
+  // 它是一个映射关系，当打包代码报错后，会找到对应的源代码，并提示错误
+  // 可以在开发的时候帮我们定位错误，而在打包部署时关闭，提升打包效率
+  // @see: http://cheng.logdown.com/posts/2016/03/25/679045
+  // cheap: 有没有列映射
+  // module: 是否处理来自loader的映射
+  // eval: 每一个模块使用eval和 // @ sourceURL来执行
+  // inline: source map 转换为DataUrl后添加到bundle中
+  // conclusion:  development: cheap-module-eval-source-map,   production: cheap-module-source-map:方便定位线上错误
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       // {
