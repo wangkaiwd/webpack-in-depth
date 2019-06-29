@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path');
+// 每次手动打包比较繁琐，可以通过Watch配置观察依赖文件(scr/)的变化，一旦有变化，则可以重新执行构建流程
 module.exports = {
   mode: 'development', // 要为webpack指定打包模式来使用内置优化，不指定默认为`production`，但是会在命令行出现黄色警告
   // 简写：相当于 => entry: {main:'./src/main.js'}
@@ -35,6 +36,17 @@ module.exports = {
   // inline: source map 转换为DataUrl后添加到bundle中
   // conclusion:  development: cheap-module-eval-source-map,   production: cheap-module-source-map:方便定位线上错误
   devtool: 'cheap-module-eval-source-map',
+  // 为什么要是用devServer: 
+  // 这些都是我们不使用server而使用本地file协议做不到的
+  // 1. live reloading
+  // 2. 方便我们内网联调，可以让其他人直接访问项目
+  // 3. 可以实现接口代理，处理跨域
+  devServer: {
+    // 告诉服务器从哪里提供内容
+    contentBase: path.resolve(__dirname, './dist'),
+    // 是否自动打开浏览器
+    open: true
+  },
   module: {
     rules: [
       // {

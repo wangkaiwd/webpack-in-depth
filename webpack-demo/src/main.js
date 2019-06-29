@@ -7,9 +7,9 @@ import './assets/fonts/iconfont.css'
 // img.src = `./dist/${avatar}`;
 // img.classList.add(style.avatar);
 // document.body.appendChild(img);
-consele.log(avatar)
 // createAvatar()
 const div = document.createElement('div');
 div.innerHTML = `<i class="iconfont wb-thumb-up"></i>`;
 document.body.appendChild(div);
+console.log('test watch command,hahahas');
 
