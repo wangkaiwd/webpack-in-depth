@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
 // 每次手动打包比较繁琐，可以通过Watch配置观察依赖文件(scr/)的变化，一旦有变化，则可以重新执行构建流程
 module.exports = {
@@ -45,7 +46,9 @@ module.exports = {
     // 告诉服务器从哪里提供内容
     contentBase: path.resolve(__dirname, './dist'),
     // 是否自动打开浏览器
-    open: true
+    open: true,
+    // 配合webpack.HotModuleReplacement来实现模块热更新
+    hot: true,
   },
   module: {
     rules: [
@@ -99,7 +102,27 @@ module.exports = {
         ]
       },
       {
-        test: /\.(css|scss)$/,
+        test: /\.css$/,
+        // 解析css文件的时候要用到2个loader
+        // css-loader: 会帮我们分析出几个css文件之间的关系,最终把css合并成一个css文件
+        // style-loader: 会将css-loader最终合成的css挂载到head下的style标签里
+        // 所以是通过style标签添加css的一种方式
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // 用于配置css-loader作用于@import的资源之前有多少个loader,确保对每个文件都应用postcss-loader和sass-loader
+              importLoaders: 1,
+              // 开启css模块化
+              // modules: true
+            }
+          },
+          'postcss-loader',
+        ]
+      },
+      {
+        test: /\.scss$/,
         // 解析css文件的时候要用到2个loader
         // css-loader: 会帮我们分析出几个css文件之间的关系,最终把css合并成一个css文件
         // style-loader: 会将css-loader最终合成的css挂载到head下的style标签里
@@ -127,6 +150,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     // HtmlWebpackPlugin插件会在打包结束后，自动生成一个html文件，并把打包生层的js文件自动引入到html中.
     // 这对于在文件名中包含每次会随着编译而发生变化哈希的webpack bundle（webpack打包文件）尤其有用
     new HtmlWebpackPlugin({
