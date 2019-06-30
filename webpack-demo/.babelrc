@@ -1,4 +1,21 @@
 {
+  // 当我们写一个库文件的时候要进行如下配置：
+  // 并根据官网安装如下依赖： https://babeljs.io/docs/en/babel-plugin-transform-runtime
+  // @babel/plugin-transform-runtime
+  // @babel/runtime
+  // @babel/runtime-corejs2
+  // "plugins": [
+  //   [
+  //     "@babel/plugin-transform-runtime",
+  //     {
+  //       "absoluteRuntime": false,
+  //       "corejs": 2, 
+  //       "helpers": true,
+  //       "regenerator": true,
+  //       "useESModules": false
+  //     }
+  //   ]
+  // ]
   // 这样配置之后，Promise, map等语法并没有进行转换为es5，而国产浏览器和低版本浏览器并不支持
   "presets": [
     [
