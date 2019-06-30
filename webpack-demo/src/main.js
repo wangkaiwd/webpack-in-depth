@@ -1,28 +1,7 @@
-import avatar from './avatar.jpeg';
-import createAvatar from './createAvatar'
-// import style from './main.scss';
-import './assets/fonts/iconfont.css'
-import './main.scss'
-
-// const img = document.createElement('img');
-// img.src = `./dist/${avatar}`;
-// img.classList.add(style.avatar);
-// document.body.appendChild(img);
-// createAvatar()
-const div = document.createElement('div');
-div.innerHTML = `<i class="iconfont wb-thumb-up"></i>`;
-document.body.appendChild(div);
-console.log('test watch command,hahahas');
-
-
-const button = document.createElement('button');
-button.innerHTML = '新增';
-document.body.appendChild(button);
-
-button.onclick = function () {
-  const p = document.createElement('p');
-  p.classList.add('item');
-  p.innerHTML = 'item';
-  document.body.appendChild(p)
-}
-
+// import "@babel/polyfill"; // 直接引入会将所有的语法的兼容写法都引入，导致打包文件比较大
+// 尽管没有配置babel,但是在chrome中也能执行，应为新版chrome对es6语法的支持比较好
+// 为了兼容低版本浏览器，需要使用babel
+const arr = [new Promise(() => { }), new Promise(() => { })]
+arr.map(item => {
+  console.log(item);
+})

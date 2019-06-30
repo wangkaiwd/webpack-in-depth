@@ -1,0 +1,21 @@
+{
+  // 这样配置之后，Promise, map等语法并没有进行转换为es5，而国产浏览器和低版本浏览器并不支持
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "edge": "17",
+          "firefox": "60",
+          "chrome": "67",
+          "safari": "11.1",
+        },
+        // https://github.com/vuejs/vuepress/issues/1471
+        // 消除corejs的警告
+        "corejs": "3.0.0",
+        // https://www.babeljs.cn/docs/usage
+        "useBuiltIns": "usage"
+      }
+    ]
+  ]
+}
