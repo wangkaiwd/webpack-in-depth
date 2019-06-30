@@ -33,6 +33,8 @@
         // https://www.babeljs.cn/docs/usage
         "useBuiltIns": "usage"
       }
-    ]
+    ],
+    // 要注意这里的顺序问题，和loader一样，从下到上，从右到左
+    "@babel/preset-react"
   ]
 }

@@ -70,10 +70,10 @@ module.exports = {
       //   ]
       // },
       // url-loader的功能类似于`file-loader`，但是在文件大小(单位byte)低于指定的限制时，可以返回一个DataURL(base64)
-      { 
-        test: /\.js$/, 
-        exclude: /node_modules/, 
-        loader: "babel-loader" 
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/, // 匹配 .png,.jpg,.jpeg,.gif结尾的文件
