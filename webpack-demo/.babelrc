@@ -31,6 +31,7 @@
         // 消除corejs的警告
         "corejs": "3.0.0",
         // https://www.babeljs.cn/docs/usage
+        // 只对我们用到的语法添加polyfill
         "useBuiltIns": "usage"
       }
     ],

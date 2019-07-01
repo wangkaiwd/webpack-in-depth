@@ -1,6 +1,7 @@
 {
   "name": "webpack-demo",
   "version": "1.0.0",
+  "sideEffects": false,
   "private": true,
   "license": "MIT",
   "scripts": {

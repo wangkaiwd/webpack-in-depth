@@ -153,6 +153,10 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    // 开启Tree Shaking,在production模式默认开启
+    usedExports: true
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
