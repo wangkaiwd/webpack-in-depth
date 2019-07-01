@@ -15,7 +15,7 @@ import { add } from './utils/math'
 console.log(add(1, 2));
 class App extends Component {
   render() {
-    return <div>Hello React and Webpack</div>
+    return <div>Hello React and Webpack!!!!</div>
   }
 }
 
