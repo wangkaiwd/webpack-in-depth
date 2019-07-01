@@ -3,7 +3,6 @@
 node_modules
 # /dist: 匹配根目录下的dist目录
 dist
-build
 
 # local env files
 .env.local
