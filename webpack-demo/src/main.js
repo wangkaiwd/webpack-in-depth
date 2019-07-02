@@ -11,11 +11,25 @@ import ReactDOM from 'react-dom'
 //               但是我们需要文件中的逻辑以及文件中的一些css: import "*.css"。这样的文件可以通过数组的形式在sideEffects中
 //              进行配置
 //  生产环境: 默认开启usedExports:true，我们需要在sideEffects中配置其它不需要导出，但是不能被删除的文件
-import { add } from './utils/math'
-console.log(add(1, 2));
+const renderElement = () => {
+  return import('lodash').then(({ default: _ }) => {
+    const div = document.createElement('div');
+    div.innerHTML = _.join(['react', 'webpack'], '--');
+    return div
+  })
+}
+renderElement().then(div => document.body.appendChild(div))
 class App extends Component {
+  arr = [1, 2, 3]
   render() {
-    return <div>Hello React and Webpack!!!!</div>
+    return (
+      <div>
+        Hello React and Webpack!!!!
+        <ul>
+          {this.arr.map(item => (<li key={item}>{item}</li>))}
+        </ul>
+      </div>
+    )
   }
 }
 

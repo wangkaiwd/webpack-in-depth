@@ -37,5 +37,9 @@
     ],
     // 要注意这里的顺序问题，和loader一样，从下到上，从右到左
     "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties"
   ]
 }

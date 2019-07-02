@@ -10,7 +10,8 @@ module.exports = Object.assign(baseConfig, {
     hot: true,
   },
   optimization: {
-    usedExports: true
+    ...baseConfig.optimization,
+    usedExports: true,
   },
   plugins: [
     ...baseConfig.plugins,

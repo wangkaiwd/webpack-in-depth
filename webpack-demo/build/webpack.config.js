@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const webpack = require('webpack');
 const path = require('path');
 module.exports = {
@@ -70,10 +71,18 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      // 将同步和异步代码都进行代码分割
+      // 这样设置之后，会将同步代码也进行分割打包，不这样设置只会将异步引入的模块分割打包
+      chunks: 'all'
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html'
     }),
+    new CleanWebpackPlugin()
   ]
 }
