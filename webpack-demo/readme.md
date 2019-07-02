@@ -1,5 +1,4 @@
-## 最简单的打包操作
-### 安装
+## 安装
 在使用`webpack`之前我们要安装`webpack`,安装命令如下：  
 ```npm
 # 创建webpack-demo文件夹
@@ -9,7 +8,7 @@ yarn init -y
 # 安装webpack相关依赖
 yarn add webpack webpack-cli -D
 ```
-这里我们安装`webpack-cli`的原因是因为它可以让我们可以在命令行中运行`webpack`,否则`webpack`将无法运行
+这里我们安装`webpack-cli`的原因是因为它可以让我们可以在命令行中运行`webpack`,否则`webpack`命令将无法运行
 
 ### 生成打包文件
 
