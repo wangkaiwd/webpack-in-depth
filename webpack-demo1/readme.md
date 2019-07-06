@@ -78,3 +78,68 @@ mode: 'development'
 而当我们使用`development`模式时，`webpack`会将`process.env.NODE_ENV`的值设置为`development`,并取消代码压缩等功能，提升开发体验
 
 ## 使用插件
+在`webpack`中，我们可以使用各种各样的插件来自定义`webpack`构建过程,方便我们的开发。
+
+这里我们介绍2个常用的`plugin`：  
+* `HtmlWebpackPlugin`:  自动创建一个`html`文件来帮我们引入打包文件，这对我们每次打包都通过`hash`值来生成不同的打包文件的情况特别有用
+* `CleanWebpackPlugin`: 在打包之前删除`output.path`指定的位置中的文件，保证每次打包都是最新的文件
+
+首先我们来安装这俩个插件：  
+```npm
+yarn add --dev html-webpack-plugin clean-webpack-plugin
+```
+
+接下来我们再`webpack`中使用这2个插件：  
+```js
+// 引入插件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+plugins: [
+  new HtmlWebpackPlugin({
+    filename: 'index.html', // 生成html文件的文件名
+    template: './index.html' // 使用的html模板
+  }),
+  new CleanWebpackPlugin()
+]
+```
+
+这里我们通过为`html-webpack-plugin`来指定根目录下的`index.html`为模版，生成打包后的`index.html`。新生成的`index.html`文件与模板文件不同之处在于会自动引入打包生成的`js`文件。
+
+这里我们为`HtmlWebpackPlugin`指定`template`的原因是因为我们可以在模板文件中自己写一些我们自己的代码，比如引入一些`css`或者执行一段`js`脚本亦或者我们可以在模板文件中指定项目的根元素：  
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 在模板中指定根元素，方便开发时为其中插入元素 -->
+  <div id="root"></div>
+</body>
+
+</html>
+```
+
+通过使用插件我们目前解决了如下问题：  
+1. 不用再手动引入打包文件
+2. 不用在重新打包的时候手动去删除旧的打包文件
+
+## 使用`loader`
+
+### 项目中使用`css`
+
+### 项目中使用图片和字体图标
+
+## `source map`配置
+
+## `webpackDevServer`方便开发和调试
+
+## 实现代码的热模块更新
+
+## 使用`babel`转义`es6`语法
