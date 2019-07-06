@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom'
 //              进行配置
 //  生产环境: 默认开启usedExports:true，我们需要在sideEffects中配置其它不需要导出，但是不能被删除的文件
 const renderElement = () => {
-  return import('lodash').then(({ default: _ }) => {
+  return import(/* webpackChunkName:"lodash" */'lodash').then(({ default: _ }) => {
     const div = document.createElement('div');
     div.innerHTML = _.join(['react', 'webpack'], '--');
     return div
