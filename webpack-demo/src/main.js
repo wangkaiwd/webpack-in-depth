@@ -61,3 +61,4 @@ document.body.appendChild(div);
 
 // ReactDOM.render(<App />, document.getElementById('root'))
 
+console.dir(process.env.MODE)

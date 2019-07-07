@@ -7,11 +7,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build:dev": "webpack --config ./build/webpack.dev.js",
-    "build:prod": "webpack --config ./build/webpack.prod.js",
-    "build:analysis": "webpack --config ./build/webpack.prod.js",
+    "build:dev": "webpack --env.mode=dev --config ./build/webpack.dev.js",
+    "build:prod": "webpack --env.mode=prod --config ./build/webpack.prod.js",
+    "build:analysis": "webpack --env.mode=analy --config ./build/webpack.prod.js",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --config ./build/webpack.dev.js"
+    "start": "webpack-dev-server --env.mode=dev --config ./build/webpack.dev.js"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.0",
