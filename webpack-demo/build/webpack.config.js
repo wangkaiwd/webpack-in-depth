@@ -78,6 +78,7 @@ module.exports = {
       minSize: 30000, // 需要进行代码分割模块的chunk的最小体积，这里的意思是不会对小于30kb的模块进行打包。
       // minSize: 0,
       // maxSize: 0, // 当需要进行代码分割模块的体积超过该配置项时会继续进行拆分，一般情况我们不会对该项进行配置
+      // 打包生成的chunks中，最少有几个chunk使用到了需要分割的模块
       minChunks: 1, // 模块被最少使用的次数，当小于该次数时不会进行代码分割
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
@@ -91,13 +92,13 @@ module.exports = {
         vendors: { // 当打包代码满足test的正则时，该配置生效
           test: /[\\/]node_modules[\\/]/, // 检测import 引入的模块是否在node_modules下
           priority: -10, // 打包chunks的优先级，在满足分组条件后优先使用的分组打包方式
-          filename: 'vendors.js', // 将所有分割出来的文件生成到指定文件中
+          // filename: 'vendors.js', // 将所有分割出来的文件生成到指定文件中
         },
         default: { // vendors中不满足test的正则的文件的代码分割在这里配置
           // minChunks: 2,
           priority: -20,
           reuseExistingChunk: true,
-          filename: 'common.js'
+          // filename: 'common.js'
         }
       }
     }

@@ -1,8 +1,6 @@
-// import React, { Component } from 'react'
-// import ReactDOM from 'react-dom'
-import { add } from './utils/math'
-console.log(add);
-
+// import React from 'react'
+// import { render } from 'react-dom'
+// import join from 'lodash/join'
 
 // import _ from 'lodash'
 // const div = document.createElement('div');
@@ -19,14 +17,28 @@ console.log(add);
 //               但是我们需要文件中的逻辑以及文件中的一些css: import "*.css"。这样的文件可以通过数组的形式在sideEffects中
 //              进行配置
 //  生产环境: 默认开启usedExports:true，我们需要在sideEffects中配置其它不需要导出，但是不能被删除的文件
-// const renderElement = () => {
-//   return import(/* webpackChunkName:"lodash" */'lodash').then(({ default: _ }) => {
-//     const div = document.createElement('div');
-//     div.innerHTML = _.join(['react', 'webpack'], '--');
-//     return div
+const renderElement = () => {
+  return import(/* webpackChunkName:"lodash" */'lodash/join').then(({ default: join }) => {
+    const div = document.createElement('div');
+    div.innerHTML = join(['react', 'webpack'], '--');
+    return div
+  })
+}
+// const renderReactDOM = () => {
+//   return import(/* webpackChunkName:"react-dom" */'react-dom').then(({ default: ReactDOM }) => {
+//     return ReactDOM
 //   })
 // }
-// renderElement().then(div => document.body.appendChild(div))
+// // 通过import()语法实现模块懒加载，当然在使用该语法的时候一定要添加polyfill来进行代码转义
+// // 这里只有在点击浏览器文档的时候，才会对引入lodash
+document.addEventListener('click', () => {
+  renderElement().then(div => document.body.appendChild(div))
+  // Promise.all(renderElement(), renderReactDOM()).then(result => {
+  //   const [div, ReactDOM] = result
+  //   ReactDOM.render(div, document.getElementById('root'))
+  // })
+})
+
 
 
 // class App extends Component {
