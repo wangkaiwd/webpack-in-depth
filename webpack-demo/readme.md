@@ -153,3 +153,8 @@ module: {
 * `preloading`: 和浏览器当前需要加载的资源一同加载
 
 `prefetching`拥有更好的性能，比如页面中需要弹出的模态框可以稍后加载
+
+### `CSS`代码分割
+默认`css`文件会打包到`js`中
+
+使用插件： `mini-css-extract-plugin`来代替`style-loader`的作用,并且只在生产环境中开启

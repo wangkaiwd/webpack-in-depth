@@ -1,7 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const baseConfig = require('./webpack.config');
-module.exports = Object.assign(baseConfig, {
+const merge = require('webpack-merge')
+module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   devServer: {
@@ -9,12 +10,41 @@ module.exports = Object.assign(baseConfig, {
     open: true,
     hot: true,
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            }
+          },
+          'postcss-loader',
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }
+    ]
+  },
   optimization: {
-    ...baseConfig.optimization,
     usedExports: true,
   },
   plugins: [
-    ...baseConfig.plugins,
     new webpack.HotModuleReplacementPlugin()
   ]
 }) 

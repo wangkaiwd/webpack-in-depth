@@ -1,7 +1,7 @@
 // import React from 'react'
 // import { render } from 'react-dom'
 // import join from 'lodash/join'
-
+import "./assets/styles/base.scss"
 // import _ from 'lodash'
 // const div = document.createElement('div');
 // div.innerHTML = _.join(['webpack', 'CodeSplitting'], '--');
