@@ -18,7 +18,11 @@
 //              进行配置
 //  生产环境: 默认开启usedExports:true，我们需要在sideEffects中配置其它不需要导出，但是不能被删除的文件
 const renderElement = () => {
-  return import(/* webpackChunkName:"lodash" */'lodash/join').then(({ default: join }) => {
+  return import(
+    /* webpackPrefetch: true */
+    /* webpackChunkName:"lodash" */
+    'lodash/join'
+  ).then(({ default: join }) => {
     const div = document.createElement('div');
     div.innerHTML = join(['react', 'webpack'], '--');
     return div

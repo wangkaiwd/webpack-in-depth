@@ -144,3 +144,12 @@ module: {
 
 1. 指定`webpack`通过`codeSplitting`生成的代码的名字： 在`import()`方法前边加一行注释，也叫魔法注释
 2. `SpliChunksPlugin`参数
+
+### 懒加载
+### `preLoading`和`preFetching`
+通过魔法注释来进行添加(`magic comments`)
+
+* `prefetching`: 在浏览器加载完成必要的资源后，利用空闲时间来加载该模块
+* `preloading`: 和浏览器当前需要加载的资源一同加载
+
+`prefetching`拥有更好的性能，比如页面中需要弹出的模态框可以稍后加载
