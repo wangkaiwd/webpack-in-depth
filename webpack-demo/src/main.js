@@ -1,5 +1,13 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+// import React, { Component } from 'react'
+// import ReactDOM from 'react-dom'
+import { add } from './utils/math'
+console.log(add);
+
+
+// import _ from 'lodash'
+// const div = document.createElement('div');
+// div.innerHTML = _.join(['webpack', 'CodeSplitting'], '--');
+// document.body.appendChild(div);
 // 这里虽然只用到了add方法，但是连minus方法也一块儿打包了
 // Tree Shaking: 摇树，会将我们代码中没有用到的代码摇落。
 // 只支持ES Module模块化方式，require引入并不支持
@@ -11,26 +19,28 @@ import ReactDOM from 'react-dom'
 //               但是我们需要文件中的逻辑以及文件中的一些css: import "*.css"。这样的文件可以通过数组的形式在sideEffects中
 //              进行配置
 //  生产环境: 默认开启usedExports:true，我们需要在sideEffects中配置其它不需要导出，但是不能被删除的文件
-const renderElement = () => {
-  return import(/* webpackChunkName:"lodash" */'lodash').then(({ default: _ }) => {
-    const div = document.createElement('div');
-    div.innerHTML = _.join(['react', 'webpack'], '--');
-    return div
-  })
-}
-renderElement().then(div => document.body.appendChild(div))
-class App extends Component {
-  arr = [1, 2, 3]
-  render() {
-    return (
-      <div>
-        Hello React and Webpack!!!!
-        <ul>
-          {this.arr.map(item => (<li key={item}>{item}</li>))}
-        </ul>
-      </div>
-    )
-  }
-}
+// const renderElement = () => {
+//   return import(/* webpackChunkName:"lodash" */'lodash').then(({ default: _ }) => {
+//     const div = document.createElement('div');
+//     div.innerHTML = _.join(['react', 'webpack'], '--');
+//     return div
+//   })
+// }
+// renderElement().then(div => document.body.appendChild(div))
 
-ReactDOM.render(<App />, document.getElementById('root'))
+
+// class App extends Component {
+//   arr = [1, 2, 3]
+//   render() {
+//     return (
+//       <div>
+//         Hello React and Webpack!!!!
+//         <ul>
+//           {this.arr.map(item => (<li key={item}>{item}</li>))}
+//         </ul>
+//       </div>
+//     )
+//   }
+// }
+
+// ReactDOM.render(<App />, document.getElementById('root'))
