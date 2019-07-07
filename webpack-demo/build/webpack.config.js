@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
 module.exports = {
   entry: {
@@ -76,6 +77,12 @@ module.exports = {
       filename: 'index.html',
       template: './index.html'
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      // 使用全局变量_来代替lodash: shimming globals:https://webpack.js.org/guides/shimming/#shimming-globals
+      // 这样就不用再通import lodash
+      // 一般不推荐这样使用，但是碰到一些不支持模块化的第三方文件可以用这种方法
+      _: 'lodash'
+    })
   ]
 }
