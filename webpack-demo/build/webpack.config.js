@@ -7,7 +7,8 @@ module.exports = {
     main: './src/main.js',
   },
   output: {
-    filename: '[name]_[hash].js',
+    filename: '[name]_[hash:8].js',
+    chunkFilename: '[name]_[hash:8]_chunk.js', // 从入口文件中通过CodeSplitting分割出来的文件名称
     path: path.resolve(__dirname, '../dist'),
   },
   module: {
@@ -23,7 +24,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              name: '[name]_[hash].[ext]',
+              name: '[name]_[hash:8].[ext]',
               outputPath: 'images/',
               limit: 8192,
             }
@@ -36,7 +37,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name]_[hash].[ext]',
+              name: '[name]_[hash:8].[ext]',
               outputPath: 'fonts/'
             }
           }
