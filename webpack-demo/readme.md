@@ -143,4 +143,4 @@ module: {
 ### `SplitChunksPlugin`参数学习
 
 1. 指定`webpack`通过`codeSplitting`生成的代码的名字： 在`import()`方法前边加一行注释，也叫魔法注释
-2. 要修改动态引入插件才能成功
+2. `SpliChunksPlugin`参数

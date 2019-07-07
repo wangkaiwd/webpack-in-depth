@@ -73,9 +73,26 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      // 将同步和异步代码都进行代码分割
-      // 这样设置之后，会将同步代码也进行分割打包，不这样设置只会将异步引入的模块分割打包
-      chunks: 'all'
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      automaticNameMaxLength: 30,
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
     }
   },
   plugins: [
