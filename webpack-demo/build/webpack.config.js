@@ -5,11 +5,6 @@ module.exports = {
   entry: {
     main: './src/main.js',
   },
-  output: {
-    filename: '[name]_[hash:8].js',
-    chunkFilename: '[name]_[hash:8]_chunk.js', // 从入口文件中通过CodeSplitting分割出来的文件名称
-    path: path.resolve(__dirname, '../dist'),
-  },
   module: {
     rules: [
       {
@@ -23,7 +18,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              name: '[name]_[hash:8].[ext]',
+              name: '[name]_[hash].[ext]',
               outputPath: 'images/',
               limit: 8192,
             }
@@ -36,7 +31,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name]_[hash:8].[ext]',
+              name: '[name]_[hash].[ext]',
               outputPath: 'fonts/'
             }
           }
@@ -58,7 +53,7 @@ module.exports = {
       automaticNameDelimiter: '~',
       automaticNameMaxLength: 30,
       name: true,
-      cacheGroups: { 
+      cacheGroups: {
         // 满足上述分组条件的时候会之下边的配置.
         // cacheGroups:大概意思就是说在进行代码打包的时候，会先将内容进行缓存，之后在根据下边的配置进行分组处理
         // 而不会说在我们引入多个模块时分别为每个模块生成打包文件
