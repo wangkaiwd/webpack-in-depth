@@ -1,5 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 module.exports = {
   mode: 'development',
@@ -12,11 +12,11 @@ module.exports = {
     filename: '[name]_[hash].js', // 每个打包输出文件的名称
     // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html', // 生成html文件的文件名
-      template: './index.html' // 使用的html模板
-    }),
-    new CleanWebpackPlugin()
-  ]
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     filename: 'index.html', // 生成html文件的文件名
+  //     template: './index.html' // 使用的html模板
+  //   }),
+  //   new CleanWebpackPlugin()
+  // ]
 }
