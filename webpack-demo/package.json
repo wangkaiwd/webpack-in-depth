@@ -9,6 +9,7 @@
   "scripts": {
     "build:dev": "webpack --env.mode=dev --config ./build/webpack.dev.js hello world",
     "build:prod": "webpack --env.mode=prod --config ./build/webpack.prod.js",
+    "build:dll": "webpack --env.mode=dll --config ./build/webpack.dll.js",
     "build:analysis": "webpack --env.mode=analy --config ./build/webpack.prod.js",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --env.mode=dev --config ./build/webpack.dev.js"
@@ -34,7 +35,10 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
     "add": "^2.0.6",
+    "add-asset-html-webpack-plugin": "^3.1.3",
     "babel-loader": "^8.0.6",
     "core-js": "3",
     "css-loader": "^3.0.0",

@@ -158,3 +158,21 @@ module: {
 默认`css`文件会打包到`js`中
 
 使用插件： `mini-css-extract-plugin`来代替`style-loader`的作用,并且只在生产环境中开启
+
+### 提升`webpack`打包速度
+1. 使用新的`Node,Npm,Yarn`
+2. 在尽可能少的模块上使用`loader`
+3. 尽量减少插件的使用，最好使用官方推荐的插件
+4. `resolve`参数合理配置
+5. `DLL`插件优化:  
+    a. 第三方模块指打包一次
+    b. 引入第三方模块(使用dll文件引入)
+
+`DLL`的优化思路： 将一些每次打包不会发生改动的第三方模块进行单独打包，然后在最终的打包文件中引入，减少第三方模块的打包时间
+
+`DLL`的配置过程：  
+* 单独为第三方模块添加一个`webpack`配置文件
+* 在配置文件中设置入口文件、出口文件，这里需要注意的是出口配置中需要添加`library`
+* 在这个单独的配置文件中通过`webpack.DllPlugin`来生成`manifest.json`映射文件
+* 主配置中通过`add-assets-html-plugin`来为`html`中引入生成的第三方模块打包文件
+* 主配置中使用`webpack.DllReferencePlugin`来识别映射文件`manifest.json`中被打包的第三方模块,分别对应到代码中`import`等导入模块的位置

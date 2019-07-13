@@ -1,9 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 module.exports = {
   entry: {
-    main: './src/main.ts',
+    main: './src/main.tsx',
   },
   module: {
     rules: [
@@ -13,7 +15,7 @@ module.exports = {
         loader: "babel-loader"
       },
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },
@@ -88,8 +90,12 @@ module.exports = {
       // 一般不推荐这样使用，但是碰到一些不支持模块化的第三方文件可以用这种方法
       _: 'lodash'
     }),
-    new webpack.DefinePlugin({
-
+    new AddAssetHtmlPlugin({
+      filepath: path.resolve(__dirname, '../dll/*.dll.js'),
+    }),
+    new webpack.DllReferencePlugin({
+      // 会在webpack.dll.js中output中设置的library暴露的全局变量中去寻找，为项目中引入模块的地方进行提供相应的文件
+      manifest: require(path.resolve(__dirname, '../dll/manifest.json')),
     })
   ]
 }

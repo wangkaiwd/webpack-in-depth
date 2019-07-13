@@ -1,5 +1,5 @@
-// import React from 'react'
-// import { render } from 'react-dom'
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 // import join from 'lodash/join'
 import "./assets/styles/base.scss"
 import _ from 'lodash'
@@ -45,23 +45,16 @@ document.body.appendChild(div);
 
 
 
-// class App extends Component {
-//   arr = [1, 2, 3]
-//   render() {
-//     return (
-//       <div>
-//         Hello React and Webpack!!!!
-//         <ul>
-//           {this.arr.map(item => (<li key={item}>{item}</li>))}
-//         </ul>
-//       </div>
-//     )
-//   }
-// }
+const App: React.FC = () => {
+  const arr = [1, 2, 3]
+  return (
+    <div>{arr}</div>
+  )
+}
 
-// ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
 
-console.dir(process.env.MODE)
+console.dir(process.env.MODE);
 //  注册Service Worker
 if ('serviceWorker' in navigator && (process.env.mode === 'prod')) {
   window.addEventListener('load', () => {
@@ -77,4 +70,4 @@ if ('serviceWorker' in navigator && (process.env.mode === 'prod')) {
 }
 
 let hello: string = 'hello ts';
-console.log(hello)
+console.log(hello);

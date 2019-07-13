@@ -3,6 +3,7 @@
 node_modules
 # /dist: 匹配根目录下的dist目录
 dist
+dll
 
 # local env files
 .env.local

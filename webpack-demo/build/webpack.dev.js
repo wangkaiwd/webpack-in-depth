@@ -8,7 +8,7 @@ module.exports = (env) => {
     devtool: 'cheap-module-eval-source-map',
     devServer: {
       contentBase: path.resolve(__dirname, './dist'),
-      open: true,
+      open: false,
       hot: true,
     },
     output: {
