@@ -2,7 +2,7 @@
 // import { render } from 'react-dom'
 // import join from 'lodash/join'
 import "./assets/styles/base.scss"
-// import _ from 'lodash'
+import _ from 'lodash'
 const div = document.createElement('div');
 div.innerHTML = _.join(['webpack', 'CodeSplitting'], '--');
 document.body.appendChild(div);
@@ -63,7 +63,7 @@ document.body.appendChild(div);
 
 console.dir(process.env.MODE)
 //  注册Service Worker
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && (process.env.mode === 'prod')) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js').then(
       (res) => {
@@ -75,3 +75,6 @@ if ('serviceWorker' in navigator) {
     )
   })
 }
+
+let hello: string = 'hello ts';
+console.log(hello)

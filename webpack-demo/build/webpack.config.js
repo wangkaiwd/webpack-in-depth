@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 module.exports = {
   entry: {
-    main: './src/main.js',
+    main: './src/main.ts',
   },
   module: {
     rules: [
@@ -11,6 +11,11 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: "babel-loader"
+      },
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
