@@ -10,5 +10,8 @@
     "lodash": "^4.17.14",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "workbox-webpack-plugin": "^4.3.1"
   }
 }

@@ -1,7 +1,5 @@
-import _ from 'lodash'
 const add = () => {
-  const a = _.join([1, 2], '-')
-  console.log(a);
+  console.log('add');
 }
 const minus = () => {
   console.log('minus')

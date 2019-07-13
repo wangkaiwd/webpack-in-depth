@@ -62,3 +62,16 @@ document.body.appendChild(div);
 // ReactDOM.render(<App />, document.getElementById('root'))
 
 console.dir(process.env.MODE)
+//  注册Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(
+      (res) => {
+        console.log('SW registered', res);
+      },
+      (err) => {
+        console.log('failed', err);
+      }
+    )
+  })
+}

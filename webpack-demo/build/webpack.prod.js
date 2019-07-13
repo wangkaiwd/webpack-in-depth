@@ -5,6 +5,7 @@ const merge = require('webpack-merge')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 // 每次手动打包比较繁琐，可以通过Watch配置观察依赖文件(scr/)的变化，一旦有变化，则可以重新执行构建流程
 module.exports = (env) => {
   const plugins = [
@@ -14,6 +15,13 @@ module.exports = (env) => {
     }),
     new webpack.DefinePlugin({
       'process.env.MODE': JSON.stringify(`${env.mode}`)
+    }),
+    // 配置之后，即使打包后的代码所用的服务器挂掉了，也可以通过缓存运行
+    new WorkboxPlugin.GenerateSW({
+      // 这些选项帮助 ServiceWorkers 快速启用
+      // 不允许遗留任何“旧的” ServiceWorkers
+      clientsClaim: true,
+      skipWaiting: true
     })
   ]
   if (env.mode === 'analy') { plugins.push(new BundleAnalyzerPlugin()) }
