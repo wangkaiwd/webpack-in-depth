@@ -1,0 +1,14 @@
+{
+  "name": "webpack-wangkaiwd-test-001",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.14",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
+  }
+}
