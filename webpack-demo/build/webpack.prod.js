@@ -10,8 +10,8 @@ const WorkboxPlugin = require('workbox-webpack-plugin')
 module.exports = (env) => {
   const plugins = [
     new MiniCssExtractPlugin({
-      filename: '[name]_[contenthash].css',
-      chunkFilename: '[name]_[contenthash]_chunk.css'
+      filename: '[name]_[contenthash:8].css',
+      chunkFilename: '[name]_[contenthash:8]_chunk.css'
     }),
     new webpack.DefinePlugin({
       'process.env.MODE': JSON.stringify(`${env.mode}`)
@@ -72,8 +72,8 @@ module.exports = (env) => {
     output: {
       // contenthash: 打包内容发生变化的时候会更新hash值，防止代码缓存,保证用户刷新页面可以看到最新的内容
       // 不过要注意的是当使用HotModuleReplacement插件的时候不能使用contenthash,所以在dev和prod中单独进行配置
-      filename: '[name]_[contenthash].js',
-      chunkFilename: '[name]_[contenthash]_chunk.js', // 从入口文件中通过CodeSplitting分割出来的文件名称
+      filename: '[name]_[contenthash:8].js',
+      chunkFilename: '[name]_[contenthash:8]_chunk.js', // 从入口文件中通过CodeSplitting分割出来的文件名称
       path: path.resolve(__dirname, '../dist'),
     },
     plugins

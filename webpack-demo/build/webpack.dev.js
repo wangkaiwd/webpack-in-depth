@@ -12,8 +12,8 @@ module.exports = (env) => {
       hot: true,
     },
     output: {
-      filename: '[name]_[hash].js',
-      chunkFilename: '[name]_[hash]_chunk.js', // 从入口文件中通过CodeSplitting分割出来的文件名称
+      filename: '[name]_[hash:8].js',
+      chunkFilename: '[name]_[hash:8]_chunk.js', // 从入口文件中通过CodeSplitting分割出来的文件名称
       path: path.resolve(__dirname, '../dist'),
     },
     module: {

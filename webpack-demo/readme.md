@@ -176,3 +176,5 @@ module: {
 * 在这个单独的配置文件中通过`webpack.DllPlugin`来生成`manifest.json`映射文件
 * 主配置中通过`add-assets-html-plugin`来为`html`中引入生成的第三方模块打包文件
 * 主配置中使用`webpack.DllReferencePlugin`来识别映射文件`manifest.json`中被打包的第三方模块,分别对应到代码中`import`等导入模块的位置
+
+`DLL`操作简化插件： `autodll-webpack-plugin`

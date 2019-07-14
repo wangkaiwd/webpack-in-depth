@@ -1,8 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const AutoDllPlugin = require('autodll-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path')
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+// const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 module.exports = {
   entry: {
     main: './src/main.tsx',
@@ -25,7 +26,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              name: '[name]_[hash].[ext]',
+              name: '[name]_[hash:8].[ext]',
               outputPath: 'images/',
               limit: 8192,
             }
@@ -38,7 +39,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name]_[hash].[ext]',
+              name: '[name]_[hash:8].[ext]',
               outputPath: 'fonts/'
             }
           }
@@ -80,6 +81,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      inject: true,
       filename: 'index.html',
       template: './index.html'
     }),
@@ -90,12 +92,23 @@ module.exports = {
       // 一般不推荐这样使用，但是碰到一些不支持模块化的第三方文件可以用这种方法
       _: 'lodash'
     }),
-    new AddAssetHtmlPlugin({
-      filepath: path.resolve(__dirname, '../dll/*.dll.js'),
-    }),
-    new webpack.DllReferencePlugin({
-      // 会在webpack.dll.js中output中设置的library暴露的全局变量中去寻找，为项目中引入模块的地方进行提供相应的文件
-      manifest: require(path.resolve(__dirname, '../dll/manifest.json')),
-    })
+    // new AddAssetHtmlPlugin({
+    //   filepath: path.resolve(__dirname, '../dll/*.dll.js'),
+    // }),
+    // new webpack.DllReferencePlugin({
+    //   // 会在webpack.dll.js中output中设置的library暴露的全局变量中去寻找，为项目中引入模块的地方进行提供相应的文件
+    //   manifest: require(path.resolve(__dirname, '../dll/manifest.json')),
+    // })
+    // new AutoDllPlugin({
+    //   inject: true, // will inject the DLL bundle to index.html
+    //   debug: true,
+    //   filename: '[name]_[hash].js',
+    //   path: './dll',
+    //   entry: {
+    //     vendor: [
+    //       'react', 'react-dom', 'lodash'
+    //     ]
+    //   }
+    // })
   ]
 }
