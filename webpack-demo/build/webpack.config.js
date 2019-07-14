@@ -2,12 +2,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const AutoDllPlugin = require('autodll-webpack-plugin');
 const webpack = require('webpack');
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const path = require('path')
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 module.exports = {
   entry: {
     main: './src/main.tsx',
   },
+  stats: "errors-only",
   module: {
     rules: [
       {
@@ -85,6 +87,7 @@ module.exports = {
       filename: 'index.html',
       template: './index.html'
     }),
+
     new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
       // 使用全局变量_来代替lodash: shimming globals:https://webpack.js.org/guides/shimming/#shimming-globals
@@ -92,6 +95,7 @@ module.exports = {
       // 一般不推荐这样使用，但是碰到一些不支持模块化的第三方文件可以用这种方法
       _: 'lodash'
     }),
+    new FriendlyErrorsWebpackPlugin(),
     // new AddAssetHtmlPlugin({
     //   filepath: path.resolve(__dirname, '../dll/*.dll.js'),
     // }),
@@ -99,16 +103,16 @@ module.exports = {
     //   // 会在webpack.dll.js中output中设置的library暴露的全局变量中去寻找，为项目中引入模块的地方进行提供相应的文件
     //   manifest: require(path.resolve(__dirname, '../dll/manifest.json')),
     // })
-    // new AutoDllPlugin({
-    //   inject: true, // will inject the DLL bundle to index.html
-    //   debug: true,
-    //   filename: '[name]_[hash].js',
-    //   path: './dll',
-    //   entry: {
-    //     vendor: [
-    //       'react', 'react-dom', 'lodash'
-    //     ]
-    //   }
-    // })
+    new AutoDllPlugin({
+      inject: true, // will inject the DLL bundle to index.html
+      debug: true,
+      filename: '[name]_[hash].js',
+      path: './dll',
+      entry: {
+        vendor: [
+          'react', 'react-dom', 'lodash'
+        ]
+      }
+    })
   ]
 }

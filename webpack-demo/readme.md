@@ -178,3 +178,7 @@ module: {
 * 主配置中使用`webpack.DllReferencePlugin`来识别映射文件`manifest.json`中被打包的第三方模块,分别对应到代码中`import`等导入模块的位置
 
 `DLL`操作简化插件： `autodll-webpack-plugin`
+
+### 优化打包输出信息
+1. `friendly-errors-webpack-plugin`
+2. `stats:'errors-only'`
