@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const baseConfig = require('./webpack.config');
-const merge = require('webpack-merge')
+const merge = require('webpack-merge');
 module.exports = (env) => {
   return merge(baseConfig, {
     mode: 'development',
@@ -56,5 +56,5 @@ module.exports = (env) => {
         'process.env.MODE': JSON.stringify(`${env.mode}`)
       })
     ]
-  })
-}
+  });
+};
