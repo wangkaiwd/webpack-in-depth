@@ -1,5 +1,5 @@
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 module.exports = {
   mode: 'development',
@@ -12,11 +12,26 @@ module.exports = {
     filename: '[name]_[hash].js', // 每个打包输出文件的名称
     // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
   },
-  // plugins: [
-  //   new HtmlWebpackPlugin({
-  //     filename: 'index.html', // 生成html文件的文件名
-  //     template: './index.html' // 使用的html模板
-  //   }),
-  //   new CleanWebpackPlugin()
-  // ]
-}
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
+      }
+    ]
+  },
+  plugins: [
+    // 自动引入打包后的文件到html中：
+    //    对于每次打包都会重新通过hash值来生成文件名的情况特别适用
+    //    也可以通过template来生成一个我们自己定义的html模板，然后帮我们把打包后生成的文件引入
+    new HtmlWebpackPlugin({
+      filename: 'index.html', // 生成html文件的文件名
+      template: './index.html' // 使用的html模板
+    }),
+    new CleanWebpackPlugin()
+  ]
+};

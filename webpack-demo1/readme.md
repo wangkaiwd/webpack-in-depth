@@ -131,9 +131,77 @@ plugins: [
 2. 不用在重新打包的时候手动去删除旧的打包文件
 
 ## 使用`loader`
+下面是对`webpack`官网中`loader`介绍的一步分摘抄：
+> `loader`用于对模块的源代码进行转换  
+> 特性(这里只列出了部分):  
+> * `loader`支持链式传递，链中每个`loader`会将转换应用在已处理过的资源上。一组链式的`loader`将按照相反的顺序执行。链中的第一个`loader`将其结果(也就是转换后的资源)传递给下一个`loader`，依次类推
+> * `loader`可以通过`options`对象配置
+> * 插件可以为`loader`带来更多特性
+
+我个人觉得其实`loader`就是让`webpack`可以识别各种资源，然后将资源加工处理成浏览器可以识别的、兼容性更好的、性能更好的代码。
+
+接下来我们学习如何通过`loader`来让`webpack`处理各种资源。
 
 ### 项目中使用`css`
+要想使用`css`文件`，我们首先需要安装`style-loader`和`css-loader`：  
+```npm
+yarn add style-loader css-loader -D
+```
+在`webpack.config.js`进行配置：  
+```js
+module: {
+  rules: [
+    {
+      test: /.css$/,
+      use: ['style-loader', 'css-loader']
+    }
+  ]
+}
+```
+但是日常的项目中，有很多`css`属性需要添加浏览器供应商前缀来确保兼容性, 我们可以使用`postcss-loader`结合`autoprefixer`来实现：  
+```npm
+yarn add postcss-loader autoprefixer -D
+```
+我们需要为`css`文件添加`postcss-loader`,之后在根目录新建`postcss.config.js`配置`autoprefixer`:  
+```js
+// webpack.config.js
+rules: [
+  {
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      'css-loader',
+      'postcss-loader'
+    ]
+  }
+]
 
+// postcss.config.js
+module.exports = {
+  plugins: [
+    // autoprefixer: parse CSS and add vendor prefixes to CSS rule using values from can I use
+    // 解析CSS并使用Can I use 中的值 将供应商前缀添加到css规则中
+    require('autoprefixer')
+  ]
+};
+```
+平常我们也会用到`css`预处理器来方便开发，这里我们以`sass`为例：  
+```npm
+yarn add sass sass-loader node-sass -D
+```
+在`webpack`中添加如下配置：  
+
+这里要特别注意`loader`的顺序问题(反向：从下到上，从右到左)：  
+* 先通过`postcss-loader`为对应的`css`属性添加浏览器供应商前缀
+* 之后使用`css-loader`根据`import`语法将所有的`css`文件整合到一起
+* 将`css-loader`整合的`css`文件通过`style`标签插入到`html`中，实现样式的更改
+
+学习了上面的知识以后，我们再了解几个`scss-loader`的常用配置：  
+````js
+
+````
+
+到这里，我们已经满足了日常开发中对于`css`一些应用，但是
 ### 项目中使用图片和字体图标
 
 ## `source map`配置
