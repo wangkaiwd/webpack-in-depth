@@ -104,9 +104,9 @@ plugins: [
 ]
 ```
 
-这里我们通过为`html-webpack-plugin`来指定根目录下的`index.html`为模版，生成打包后的`index.html`。新生成的`index.html`文件与模板文件不同之处在于会自动引入打包生成的`js`文件。
+这里我们通过为`html-webpack-plugin`来指定根目录下的`index.html`为模版，生成打包后的`index.html`。新生成的`index.html`文件与模板文件不同之处在于会自动引入打包生成的文件(包括`js`文件、`css`文件、以及之后配置的`dll`文件)，这样即使我们使用了`[hash]`等占位符，插件也会自动帮我们动态引入资源，而不用我们每次手工配置。
 
-这里我们为`HtmlWebpackPlugin`指定`template`的原因是因为我们可以在模板文件中自己写一些我们自己的代码，比如引入一些`css`或者执行一段`js`脚本亦或者我们可以在模板文件中指定项目的根元素：  
+使用`HtmlWebpackPlugin`指定`template`的原因是因为我们可以在模板文件中自己写一些我们自己的代码，比如引入一些`css`或者执行一段`js`脚本亦或者我们可以在模板文件中指定项目的根元素：  
 ```html
 <!DOCTYPE html>
 <html lang="en">
