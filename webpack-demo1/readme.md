@@ -196,7 +196,7 @@ yarn add sass sass-loader node-sass -D
 * 之后使用`css-loader`根据`import`语法将所有的`css`文件整合到一起
 * 将`css-loader`整合的`css`文件通过`style`标签插入到`html`中，实现样式的更改
 
-学习了上面的知识以后，我们再了解几个`scss-loader`的常用配置：  
+学习了上面的知识以后，我们再了解几个`css-loader`的常用配置：  
 ````js
 
 ````
