@@ -273,10 +273,40 @@ yarn add file-loader -D
 打包文件如下：  
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-img-font.png)
 
-## `source map`配置
+这里也可以使用`url-loader`来处理静态资源，`url-loader`的工作方式和`file-loader`相同，但是它会在文件小于限制大小(单位`byte`)的时候，返回`base64`字符串，当大于限制大小时会返回和`file-loader`一样的地址字符串。
+
+这在处理一些小文件的时候不用再进行资源请求，可以提高性能
+```js
+{
+  test: /\.(png|svg|jpg|jpeg|gif)$/,
+  use: [
+    {
+      loader: 'url-loader',
+      options: {
+        // placeholders:
+        //    [ext]: 资源扩展名,默认file.extname
+        //    [name]: 资源的基本名称,默认file.basename
+        //    [hash]: 内容hash值,默认md5
+        //    [path]: 资源相对于context的路径,默认值file.dirname
+        // 默认值： [hash].[ext]
+        name: '[name]_[hash:8].[ext]',
+        // 打包文件存放到出口目录下的images文件中
+        outputPath: 'images/',
+        limit: 8192, // 单位byte,文件小于8kb时返回base64文件，大于这个限制会返回地址
+      }
+    }
+  ]
+}
+```
+我们可以看一下打包区别：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-url-loader.png)
 
 ## `webpackDevServer`方便开发和调试
 
+## `source map`配置
+
+## 配置`react`开发环境
+### 使用`babel`转义`es6`语法
+
 ## 实现代码的热模块更新
 
-## 使用`babel`转义`es6`语法
