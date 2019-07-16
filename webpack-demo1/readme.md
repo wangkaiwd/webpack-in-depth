@@ -187,21 +187,53 @@ module.exports = {
 ```
 平常我们也会用到`css`预处理器来方便开发，这里我们以`sass`为例：  
 ```npm
-yarn add sass sass-loader node-sass -D
+yarn add sass-loader node-sass -D
 ```
-在`webpack`中添加如下配置：  
+在`webpack`中添加如下配置： 
+```js
+{
+  test: /\.scss$/,
+  use: [
+    'style-loader',
+    'css-loader',
+    'postcss-loader',
+    'sass-loader'
+  ]
+}
+``` 
 
 这里要特别注意`loader`的顺序问题(反向：从下到上，从右到左)：  
-* 先通过`postcss-loader`为对应的`css`属性添加浏览器供应商前缀
-* 之后使用`css-loader`根据`import`语法将所有的`css`文件整合到一起
-* 将`css-loader`整合的`css`文件通过`style`标签插入到`html`中，实现样式的更改
+* 首先通过`sass-loader`将`scss`文件中的语法解析为`css`语法
+* 之后通过`postcss-loader`为对应的`css`属性添加浏览器供应商前缀
+* 然后使用`css-loader`根据`import`语法将所有的`css`文件整合到一起
+* 最后将`css-loader`整合的`css`文件通过`style`标签插入到`html`中，实现样式的更改
+
+**如果顺序书写错误，会导致程序无法正常运行**
+
+最终效果如下：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webapck-css.png)
 
 学习了上面的知识以后，我们再了解几个`css-loader`的常用配置：  
 ````js
-
+{
+  test: /\.scss$/,
+  use: [
+    'style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        // 开启css模块化
+        modules: true,
+        // 在css-loader前应用的loader的数量：确保在使用import语法前先经过sass-loader和postcss-loader的处理
+        importLoaders: 2
+      }
+    },
+    'postcss-loader',
+    'sass-loader'
+  ]
+}
 ````
 
-到这里，我们已经满足了日常开发中对于`css`一些应用，但是
 ### 项目中使用图片和字体图标
 
 ## `source map`配置
