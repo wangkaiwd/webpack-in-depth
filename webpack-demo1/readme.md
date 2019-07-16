@@ -235,6 +235,43 @@ yarn add sass-loader node-sass -D
 ````
 
 ### 项目中使用图片和字体图标
+要想在项目中使用图片和字体图标，我们需要使用到`file-loader`:  
+```npm
+yarn add file-loader -D
+```
+需要在`webpack.config.js`中添加如下配置：  
+```js
+{
+  test: /\.(png|svg|jpg|gif)$/,
+  use: ['file-loader']
+}
+```
+配置成功后`webpack`会将我们引入的资源转换为路径字符串，`webpack`会通过字符串帮我们找到文件的位置。
+
+接下来我们尝试一下`file-loader`的几个配置项：  
+```js
+{
+  test: /\.(png|svg|jpg|jpeg|gif)$/,
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        // placeholders:
+        //    [ext]: 资源扩展名
+        //    [name]: 资源的基本名称
+        //    [hash]: 内容hash值
+        //    [path]: 资源相对于context的路径
+        // 默认值： [hash].[ext]
+        name: '[name]_[hash:8].[ext]',
+        // 打包文件存放到出口目录下的images文件中
+        outputPath: 'images/'
+      }
+    }
+  ]
+}
+```
+打包文件如下：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-img-font.png)
 
 ## `source map`配置
 

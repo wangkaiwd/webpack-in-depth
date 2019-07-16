@@ -38,6 +38,25 @@ module.exports = {
           'postcss-loader',
           'sass-loader'
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              // placeholders:
+              //    [ext]: 资源扩展名
+              //    [name]: 资源的基本名称
+              //    [hash]: 内容hash值
+              //    [path]: 资源相对于context的路径
+              // 默认值： [hash].[ext]
+              name: '[name]_[hash:8].[ext]',
+              // 打包文件存放到出口目录下的images文件中
+              outputPath: 'images/'
+            }
+          }
+        ]
       }
     ]
   },
