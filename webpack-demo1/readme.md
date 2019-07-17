@@ -437,8 +437,34 @@ module.exports = merge(baseConfig, {
 接下来我们就可以直接使用`yarn build`和`yarn start`命令来分别为开发环境和生产环境进行打包了
 
 ## `webpackDevServer`方便开发和调试
+现在我们在每次修改代码后，都需要再次重新打包文件，并在浏览器中打开生成的`html`文件。而且由于是本地打开`html`文件，诸如请求代理、局域网内预览等功能便无法使用。
 
-## 实现代码的热模块更新
+`webpack-dev-server`为我们提供了一个简单的`web`服务器，能够实时重新加载(`live reloading`)修改后的代码,并且也提供了如`proxy`等功能来支持我们跨域请求接口，极大的方便了开发。
+```npm
+yarn add webpack-dev-server -D
+```
+
+之后我们在开发环境的`webpack`配置中添加如下配置：
+```js
+devServer: {
+  // 告诉服务器从哪里提供内容。只有在你想要提供静态文件时才需要
+  contentBase: absPath('../dist'),
+  // 是否在启动服务时自动打开浏览器
+  open: true,
+  // 端口在没有设置的时候默认为8080
+  port: 3000
+}
+```
+
+当然，这样更改之后我们要通过`webpack-dev-server`来执行开发时的配置文件：  
+```js
+// "start": "webpack --config ./config/webpack.dev.js"
+"start": "webpack-dev-server --config ./config/webpack.dev.js"
+```
+执行`yarn start`:
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-dev-server-start.png)
+
+### 实现代码的热模块更新
 
 ## 配置`react`开发环境
 ### 使用`babel`转义`es6`语法

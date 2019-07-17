@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config ./config/webpack.prod.js",
-    "start": "webpack --config ./config/webpack.dev.js"
+    "start": "webpack-dev-server --config ./config/webpack.dev.js"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.1",
@@ -20,6 +20,7 @@
     "url-loader": "^2.0.1",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2",
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {}
