@@ -1,13 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
+const absPath = (dir) => path.resolve(__dirname, dir)
 module.exports = {
-  mode: 'development',
   entry: {
-    main: './src/main.js' // 入口文件对应的源代码位置，key值为打包生成后的chunkNames
+    main: absPath('../src/main.js') // 入口文件对应的源代码位置，key值为打包生成后的chunkNames
   },
   output: {
-    path: path.resolve(__dirname, './dist'), // 打包生成文件存放的位置
+    path: absPath('../dist'), // 打包生成文件存放的位置
     // 使用每次构建过程中，唯一的hash生成
     filename: '[name]_[hash].js', // 每个打包输出文件的名称
     // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
@@ -86,8 +85,7 @@ module.exports = {
     //    也可以通过template来生成一个我们自己定义的html模板，然后帮我们把打包后生成的文件引入
     new HtmlWebpackPlugin({
       filename: 'index.html', // 生成html文件的文件名
-      template: './index.html' // 使用的html模板
-    }),
-    new CleanWebpackPlugin()
+      template: absPath('../index.html') // 使用的html模板
+    })
   ]
 };
