@@ -20,3 +20,9 @@ const createElement = (content, tag, className) => {
 createElement(avatar, 'img', style.box);
 
 createElement(alipay, 'img', style.icon);
+
+if (module.hot) {
+  module.hot.accept('./main.js', () => {
+    console.log('update module');
+  })
+}

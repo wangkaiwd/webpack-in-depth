@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const absPath = (dir) => path.resolve(__dirname, dir);
-
+const webpack = require('webpack');
 const baseConfig = require('./webpack.config')
 module.exports = merge(baseConfig, {
   mode: 'development',
@@ -12,6 +12,12 @@ module.exports = merge(baseConfig, {
     // 是否在启动服务时自动打开浏览器
     open: true,
     // 端口在没有设置的时候默认为8080
-    port: 3000
-  }
+    port: 3000,
+    // 启用webpack的模块热替换特性
+    hot: true
+  },
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ]
 })

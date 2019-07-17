@@ -465,6 +465,34 @@ devServer: {
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-dev-server-start.png)
 
 ### 实现代码的热模块更新
+当我们在开发过程中修改一些代码的时候，我们可能只是想让我们当前修改的内容生效，而不是造成整个页面的刷新，导致我们每次修改都要重新之前的步骤来验证我们的代码。
+
+在`webpack`中我们通过如下配置来实现模块热替换的功能(`hot module replacement`),当然这个功能只在开发环境开启: 
+```js
+// webpack.dev.js
+devServer: {
+  // 告诉服务器从哪里提供内容。只有在你想要提供静态文件时才需要
+  contentBase: absPath('../dist'),
+  // 是否在启动服务时自动打开浏览器
+  open: true,
+  // 端口在没有设置的时候默认为8080
+  port: 3000,
+  // 启用webpack的模块热替换特性
+  hot: true
+},
+plugins: [
+  new webpack.NamedModulesPlugin(),
+  new webpack.HotModuleReplacementPlugin()
+]
+```
+和之前配置的区别有2个：  
+* 为`devServer`添加配置项： `hot: true`
+* 新增2个`webpack`的插件： `webpack.NameModulesPlugin`和`webpack.HotModuleReplacementPlugin`
+
+然后这样只能实现`css`文件的热更新，对于`js`的热更新，我们还需要添加一下代码：  
+```js
+
+```
 
 ## 配置`react`开发环境
 ### 使用`babel`转义`es6`语法
