@@ -1,7 +1,7 @@
 import style from './assets/styles/main.scss';
 import avatar from './assets/images/avatar.jpeg';
 import alipay from './assets/fonts/alipay.svg';
-
+import './utils/printSomething'
 console.log('img and font', avatar, alipay);
 console.log('Hello webpack!');
 const createElement = (content, tag, className) => {
@@ -16,13 +16,13 @@ const createElement = (content, tag, className) => {
   }
   document.getElementById('root').appendChild(element);
 };
-// createElement('box1');
 createElement(avatar, 'img', style.box);
 
 createElement(alipay, 'img', style.icon);
 
+[1, 2, 3, 4].map(item => console.log(item))
 if (module.hot) {
-  module.hot.accept('./main.js', () => {
+  module.hot.accept('./utils/printSomething', () => {
     console.log('update module');
   })
 }

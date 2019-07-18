@@ -491,10 +491,50 @@ plugins: [
 
 然后这样只能实现`css`文件的热更新，对于`js`的热更新，我们还需要添加一下代码：  
 ```js
+// accept接收2个参数： 1. dependencies: 一个字符串或字符串数组  2. callback: 模块更新后触发的函数
+if (module.hot) {
+  module.hot.accept('./utils/printSomething', () => {
+    console.log('update module');
+  })
+}
+```
+页面中的效果如下：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-hot-module-replacement.png)
 
+大家可能会发现我们在写`css`和类似于`vue`和`react`框架代码的时候，并没有自己手写`module.hot.accept`方法，这是框架和`css`的`loader`已经帮我们进行了自动处理，我们只需要关注代码的书写即可。
+
+## 使用`babel`转义`es6`语法
+在日常工作中，我们会使用很多`es6`里的新语法，这些语法在我们目前使用的`chrome`新版浏览其中一般都可以很好的支持，但是在一些国产浏览器或者低版本浏览器中可能会出现兼容性问题。  
+
+这里我们需要通过`babel-loader`来进行语法的转义：  
+```npm
+yarn add babel-loader @babel/core @babel/preset-env -D
+```
+在`webpack`中进行配置：  
+```js
+// webpack.config.js 中添加一个loader配置项
+{
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true
+    }
+  }
+},
+```
+
+项目根目录建立`.babelrc`文件，并加入如下代码：  
+```js
+{
+  "presets": [
+    "@babel/preset-env"
+  ]
+}
 ```
 
 ## 配置`react`开发环境
-### 使用`babel`转义`es6`语法
+
 
 

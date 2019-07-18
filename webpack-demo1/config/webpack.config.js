@@ -8,11 +8,21 @@ module.exports = {
   output: {
     path: absPath('../dist'), // 打包生成文件存放的位置
     // 使用每次构建过程中，唯一的hash生成
-    filename: '[name]_[hash].js', // 每个打包输出文件的名称
+    filename: '[name]_[hash:8].js', // 每个打包输出文件的名称
     // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          }
+        }
+      },
       {
         test: /\.css$/,
         use: [
