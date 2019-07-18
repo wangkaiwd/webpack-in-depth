@@ -1,5 +1,24 @@
 {
   "presets": [
-    "@babel/preset-env"
+    [
+      "@babel/env",
+      {
+        // 为低版本引入babel/polyfill
+        "targets": {
+          "edge": "17",
+          "firefox": "60",
+          "chrome": "67",
+          "safari": "11.1",
+        },
+        // 使用useBuiltIns要指定corejs
+        "corejs": "2",
+        // 只对项目中用到的`esnext`语法进行polyfill处理
+        "useBuiltIns": "usage",
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties"
   ]
 }

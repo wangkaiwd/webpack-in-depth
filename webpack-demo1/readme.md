@@ -535,9 +535,95 @@ yarn add babel-loader @babel/core @babel/preset-env -D
 ```
 [文档地址](https://babeljs.io/setup#installation)
 
-这样配置之后
+这样配置之后，项目中的`Promise`，`map`等语法依旧不会进行转换，这里我们使用`@babel/polyfill`来转换这些语法：  
+```npm
+yarn add @babel/polyfill -D
+```
+`.babelrc`进行如下配置：  
+```js
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        // 为低版本引入babel/polyfill
+        "targets": {
+          "edge": "17",
+          "firefox": "60",
+          "chrome": "67",
+          "safari": "11.1",
+        },
+        // 使用useBuiltIns要指定corejs
+        "corejs": "2",
+        // 只对项目中用到的`esnext`语法进行polyfill处理
+        "useBuiltIns": "usage",
+      }
+    ]
+  ]
+}
+```
+
+这样配置之后就可以通过`babel`来转换`esnext`的一些语法，并且可以兼容低版本和国产浏览器。由于使用到了`useBuiltIns:usage`，只会对我们使用到的新语法进行转换，减少了`polyfill`的体积
 
 ## 配置`react`开发环境
+在学习完以上内容以后，我们需要搭建一个支持`react`框架语法的`webpack`配置。
 
+首先我们安装相应的依赖：  
+```npm
+yarn add react react-dom
+yarn add @babel/preset-react @babel/plugin-proposal-class-properties -D
+```
+
+`.babelrc`中配置如下：  
+```js
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        // 为低版本引入babel/polyfill
+        "targets": {
+          "edge": "17",
+          "firefox": "60",
+          "chrome": "67",
+          "safari": "11.1",
+        },
+        // 使用useBuiltIns要指定corejs
+        "corejs": "2",
+        // 只对项目中用到的`esnext`语法进行polyfill处理
+        "useBuiltIns": "usage",
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties"
+  ]
+}
+```
+
+之后我们在入口文件`main.js`中写入如下代码：  
+```jsx
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
+class App extends Component {
+  state = {
+    number: 10
+  }
+  render() {
+    return (
+      <div>
+        hello Webapck React
+        <h2>{this.state.number}</h2>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+执行`yarn start`命令：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-react.png)
 
 

@@ -1,30 +1,18 @@
-import style from './assets/styles/main.scss';
-import avatar from './assets/images/avatar.jpeg';
-import alipay from './assets/fonts/alipay.svg';
-import './utils/printSomething'
-console.log('img and font', avatar, alipay);
-console.log('Hello webpack!');
-const createElement = (content, tag, className) => {
-  const element = document.createElement(tag);
-  if (tag === 'img') {
-    element.src = content;
-  } else {
-    element.innerHTML = content;
-  }
-  if (className) {
-    element.classList.add(className);
-  }
-  document.getElementById('root').appendChild(element);
-};
-createElement(avatar, 'img', style.box);
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
-createElement(alipay, 'img', style.icon);
-
-const array = [1, 2, 3, 4];
-array.map(item => console.log(item))
-Array.from([1, 2, 3, 4])
-if (module.hot) {
-  module.hot.accept('./utils/printSomething', () => {
-    console.log('update module');
-  })
+class App extends Component {
+  state = {
+    number: 10
+  }
+  render() {
+    return (
+      <div>
+        hello Webapck React
+        <h2>{this.state.number}</h2>
+      </div>
+    )
+  }
 }
+
+ReactDOM.render(<App />, document.getElementById('root'))
