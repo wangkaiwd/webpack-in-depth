@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config ./config/webpack.prod.js",
-    "build:dev": "webpack --config ./config/webpack.dev.js",
+    "build:dev": "rm -rf ./dist && webpack --config ./config/webpack.dev.js",
     "start": "webpack-dev-server --config ./config/webpack.dev.js"
   },
   "devDependencies": {

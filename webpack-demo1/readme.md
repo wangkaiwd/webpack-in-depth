@@ -533,6 +533,9 @@ yarn add babel-loader @babel/core @babel/preset-env -D
   ]
 }
 ```
+[文档地址](https://babeljs.io/setup#installation)
+
+这样配置之后
 
 ## 配置`react`开发环境
 

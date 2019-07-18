@@ -20,7 +20,9 @@ createElement(avatar, 'img', style.box);
 
 createElement(alipay, 'img', style.icon);
 
-[1, 2, 3, 4].map(item => console.log(item))
+const array = [1, 2, 3, 4];
+array.map(item => console.log(item))
+Array.from([1, 2, 3, 4])
 if (module.hot) {
   module.hot.accept('./utils/printSomething', () => {
     console.log('update module');
