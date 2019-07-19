@@ -17,7 +17,7 @@
 
 // ReactDOM.render(<App />, document.getElementById('root'))
 
-import { add, minus } from './utils/math'
+import { add } from './utils/math'
 
 add();
 // minus();

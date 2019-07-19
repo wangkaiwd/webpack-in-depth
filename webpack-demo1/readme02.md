@@ -1,5 +1,5 @@
 ## `Tree Shaking`
-`Tree Shaking`的中文意思是:摇树，它可以移除`JavaScript`上下文中的未引用代码(`dead-code`)。它只支持`es6`中的`import`和`export`语法，并不会应用到`require`语法中。
+`Tree Shaking`的中文意思是:摇树，它可以移除`JavaScript`上下文中的未引用代码(`dead-code`)。它只支持`es6`中的`import`和`export`语法，所以并不会应用到`require`语法中。
 
 我们先通过一个简单的例子来简单理解下`Tree Shaking`到底有什么作用：  
 ```js
@@ -38,7 +38,7 @@ optimization: {
   "sideEffects": false
 }
 ```
-这里的`sideEffects`用来指定有副作用的文件，它可以配置为一个数组：  
+这里的`sideEffects`用来指定有副作用的文件，它也可以配置为一个数组：  
 ```json
 {
   "sideEffects": [
@@ -56,3 +56,5 @@ optimization: {
 * 使用`es2015`模块语法
 * 在项目`package.json`文件中添加`sideEffect`配置项来制定副作用文件
 * 使用`production`模式来开启`optimization`的一些默认优化(比如`usedExports:true`和代码压缩)
+
+经过实际测试，发现在设置`package.json`中的`sideEffects`只是在生产环境生效，而且当移除该配置项的时候，对应没有用到的代码也不会进行打包，所以这里先不设置`sideEffects`。

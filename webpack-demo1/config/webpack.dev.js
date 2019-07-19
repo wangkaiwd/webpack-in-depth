@@ -6,10 +6,11 @@ const baseConfig = require('./webpack.config')
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
-  optimization: {
-    // 该选项在production环境中默认开启
-    usedExports: true
-  },
+  // 先关闭，但是结合sideEffects并没有在开发环境将未使用到的代码删掉
+  // optimization: {
+  //   // 该选项在production环境中默认开启
+  //   usedExports: true
+  // },
   devServer: {
     // 告诉服务器从哪里提供内容。只有在你想要提供静态文件时才需要
     contentBase: absPath('../dist'),

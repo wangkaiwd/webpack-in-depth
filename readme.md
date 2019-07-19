@@ -20,11 +20,3 @@
 * [`webpack`配置案例]()
 
 在学习之后我们的最终目的是自己从0开始使用`webpack`搭建一个前端项目，支持`TypeScript`+`React`+`SASS`技术栈。
-
-
-
-
-
-## 关键点记录
-在开发环境配置`Tree Shaking`,代码并没有删除，但是相应的使用到的导出会在注释中提示并应用到程序中:  
-![](./screenshots/exports-used-add.png)
