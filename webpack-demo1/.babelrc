@@ -16,6 +16,7 @@
         "useBuiltIns": "usage",
       }
     ],
+    // 这里的配置顺序也和loader一样，从下到上
     "@babel/preset-react"
   ],
   // 当我们写一个库文件的时候要在plugins中添加如下配置：

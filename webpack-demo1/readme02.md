@@ -58,3 +58,11 @@ optimization: {
 * 使用`production`模式来开启`optimization`的一些默认优化(比如`usedExports:true`和代码压缩)
 
 经过实际测试，发现在设置`package.json`中的`sideEffects`只是在生产环境生效，而且当移除该配置项的时候，对应没有用到的代码也不会进行打包，所以这里先不设置`sideEffects`。
+
+## 代码分割(`Code Splitting`)
+
+### 魔法注释
+### `SplitChunksPlugin`的配置学习
+### `MiniCssExtractPlugin`拆分`css`代码
+
+## 打包文件分析(`bundle analysis`)
