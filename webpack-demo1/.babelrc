@@ -18,6 +18,23 @@
     ],
     "@babel/preset-react"
   ],
+  // 当我们写一个库文件的时候要在plugins中添加如下配置：
+  // 并根据官网安装如下依赖： https://babeljs.io/docs/en/babel-plugin-transform-runtime
+  // @babel/plugin-transform-runtime
+  // @babel/runtime
+  // @babel/runtime-corejs2
+  // "plugins": [
+  //   [
+  //     "@babel/plugin-transform-runtime",
+  //     {
+  //       "absoluteRuntime": false,
+  //       "corejs": 2, 
+  //       "helpers": true,
+  //       "regenerator": true,
+  //       "useESModules": false
+  //     }
+  //   ]
+  // ]
   "plugins": [
     "@babel/plugin-proposal-class-properties"
   ]
