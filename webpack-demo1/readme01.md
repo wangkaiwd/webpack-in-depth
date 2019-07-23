@@ -32,15 +32,15 @@ module.exports = {
 ```
 
 之后我们通过`package.json`文件中的`script`命令来为`webpack`添加快捷命令:  
-![build-shortcut](../screenshots/build-shortcut.png)
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-build-shortcut.png)
 
 配置好后通过命令行执行：`yarn build`，会发现根目录出现了`dist`目录，里边有我们的代码`main.js`。
 
 接下来我们在根目录新建`index.html`，通过`script`标签将打包后的代码引入并在浏览器中打开：  
-![html-hello-webpack](../screenshots/html-hello-webpack.png)
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-html-hello.png)
 
 或者可以通过`node`命令来运行打包文件：  
-![node-hello-webpack](../screenshots/node-hello-webpack.png)
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-node-hello.png)
 
 到这里我们成功打包好了我们的第一个文件，感觉还是有些小激动的。
 
@@ -50,7 +50,7 @@ module.exports = {
 * 出口(`output`): 告诉`webpack`打包后的文件所存放的目录
 
 这里是一个打包截图：  
-![build_info](../screenshots/webpack_build_info.png)
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack_build_info.png)
 
 了解了基本概念之后，我们来看一下常用的相关配置：  
 ```js
