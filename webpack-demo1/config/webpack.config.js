@@ -89,6 +89,45 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      // 代码分割的类型，可以设置为'all','async','initial',默认是'async`
+      // 'all': 对同步和异步引入模块都进行代码分割
+      // 'async: 只对异步引入模块进行代码分割
+      // 'initial': 只对同步代码进行代码分割
+      chunks: 'all',
+      // 代码分割模块的最小大小要求，不满足不会进行分割，单位byte
+      minSize: 30000,
+      // 如果分割模块大于该值，还会再继续分割，0表示不限制大小
+      maxSize: 0,
+      // 最小被引用次数，只有在模块上述条件并且至少被引用过一次才会进行分割
+      minChunks: 1,
+      // 最大的异步按需加载次数
+      maxAsyncRequests: 5,
+      // 最大的同步按需加载次数
+      maxInitialRequests: 3,
+      // 分割模块打包chunk文件名分割符：'~'
+      automaticNameDelimiter: '~',
+      automaticNameMaxLength: 30,
+      // 分割文件名，设置为true会自动生成
+      name: true,
+      cacheGroups: { // 缓存组
+        vendors: {
+          // 分割模块匹配条件
+          test: /[\\/]node_modules[\\/]/,
+          // 权重
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          // 是否使用已有的chunk，设置为true表示如果使用到的文件已经被分割过了
+          // 就不会再进行分割，生成新的分割文件
+          reuseExistingChunk: true
+        }
+      }
+    }
+  },
   plugins: [
     // 自动引入打包后的文件到html中：
     //    对于每次打包都会重新通过hash值来生成文件名的情况特别适用

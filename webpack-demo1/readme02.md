@@ -60,9 +60,111 @@ optimization: {
 经过实际测试，发现在设置`package.json`中的`sideEffects`只是在生产环境生效，而且当移除该配置项的时候，对应没有用到的代码也不会进行打包，所以这里先不设置`sideEffects`。
 
 ## 代码分割(`Code Splitting`)
+随着我们项目的功能和需求的不断扩展，所生成代码的体积也会越来越大，如果这些内容都加载到入口文件的话，会导致项目的加载时间越来越长。
 
-### 魔法注释
+`webpack`中的代码分割可以防止一个文件打包后的体积过大而导致加载时间过长的问题。`code splitting`可以把代码分割到不同的`bundle`中，然后可以按需加载或并行加载文件。这样我们可以获取到更小的打包资源，并通过控制资源加载优先级，来合理设置页面加载时间。
+
+
+### 动态导入
+`webpack`默认支持对`es6`中的`import()`语法引入的模块进行代码分割，这里我们以`lodash`的引入为例，代码和打包结果如下:  
+```jsx
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
+class App extends Component {
+  state = {
+    number: 10,
+    text: ''
+  }
+  componentDidMount = () => {
+    this.dynamicLodash()
+  }
+  dynamicLodash = () => {
+    import('lodash').then(({ default: _ }) => {
+      this.setState({ text: _.join([1, 2, 3], '-') })
+    })
+  }
+  render() {
+    const { text } = this.state
+    return (
+      <div>
+        hello Webapck React
+        <h2>{this.state.number}</h2>
+        <h1>{text}</h1>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+这里我们通过`import()`语法来动态引入`loadash`,和使用`import`引入的效果区别如下: 
+
+分割前：
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-sync-import.png)
+分割后：
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-dynamic-imports.png)
+
+为了可以更清晰的看到打包出来的文件的信息，我们可以通过`webpack`提供的魔法注释(`magic comments`)来对分割的`chunk`进行命名：  
+```js
+import(/*webpackChunkName: "lodash"*/'lodash')
+```
+打包后效果如下:  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-dynamic-import-comments.png)
+这样我们可以很清晰的看到打包后的文件名。
+
 ### `SplitChunksPlugin`的配置学习
+有小伙伴可能注意到，我们在项目中还引入了`React`和`ReactDOM`。像这样使用同步方式引入的代码能不能也进行代码分割呢？
+
+答案是可以的，配置如下：  
+```js
+// webpack.config.js
+optimization: {
+  splitChunks: {
+    // 代码分割的类型，可以设置为'all','async','initial',默认是'async`
+    // 'all': 对同步和异步引入模块都进行代码分割
+    // 'async: 只对异步引入模块进行代码分割
+    // 'initial': 只对同步代码进行代码分割
+    chunks: 'all',
+    // 代码分割模块的最小大小要求，不满足不会进行分割，单位byte
+    minSize: 30000,
+    // 如果分割模块大于该值，还会再继续分割，0表示不限制大小
+    maxSize: 0,
+    // 最小被引用次数，只有在模块上述条件并且至少被引用过一次才会进行分割
+    minChunks: 1,
+    // 最大的异步按需加载次数
+    maxAsyncRequests: 5,
+    // 最大的同步按需加载次数
+    maxInitialRequests: 3,
+    // 分割模块打包chunk文件名分割符：'~'
+    automaticNameDelimiter: '~',
+    automaticNameMaxLength: 30,
+    // 分割文件名，设置为true会自动生成
+    name: true,
+    cacheGroups: { // 缓存组
+      vendors: {
+        // 分割模块匹配条件
+        test: /[\\/]node_modules[\\/]/,
+        // 权重
+        priority: -10
+      },
+      default: {
+        minChunks: 2,
+        priority: -20,
+        // 是否使用已有的chunk，设置为true表示如果使用到的文件已经被分割过了
+        // 就不会再进行分割，生成新的分割文件
+        reuseExistingChunk: true
+      }
+    }
+  }
+}
+```
+这里我们只将`chunks`设置为`all`，其它的使用`splitChunksPlugin`的默认配置即可：
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-split-chunk-all.png)
+
+### `Prefetching和PreLoading`
+
+
 ### `MiniCssExtractPlugin`拆分`css`代码
 
 ## 打包文件分析(`bundle analysis`)
