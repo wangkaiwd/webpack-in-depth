@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './assets/styles/main.scss'
+console.log('MODE', process.env.MODE)
+
 class App extends Component {
   state = {
-    number: 10,
+    number: 12,
     text: '',
     time: ''
   }
@@ -41,7 +43,6 @@ class App extends Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
-
 // import { add } from './utils/math'
 
 // add();

@@ -4,9 +4,10 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "webpack --config ./config/webpack.prod.js",
-    "build:dev": "rm -rf ./dist && webpack --config ./config/webpack.dev.js",
-    "start": "webpack-dev-server --config ./config/webpack.dev.js"
+    "build": "webpack --env.MODE=prod --config ./config/webpack.prod.js",
+    "build:dev": "rm -rf ./dist && webpack --env.MODE=dev --config ./config/webpack.dev.js",
+    "build:analysis": "webpack --env.MODE=analysis --config ./config/webpack.prod.js",
+    "start": "webpack-dev-server --env.MODE=dev --config ./config/webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -27,6 +28,7 @@
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.1",
     "webpack": "^4.35.2",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2",
     "webpack-merge": "^4.2.1"

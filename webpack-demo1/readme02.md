@@ -275,5 +275,89 @@ plugins: [
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-extract-css.png)
 
 ## 打包文件分析(`bundle analysis`)
+在我们把代码打包好将要部署到服务器之前，如果想要看一下各个模块打包后的体积大小的话，需要分析`webpack`的打包输出结果。官方文档相关知识在这里：[传送门](https://webpack.js.org/guides/code-splitting/#bundle-analysis)。
+
+这里我们通过官方推荐的插件[`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer)来进行打包体积分析。
+
+还是熟悉的套路，我们需要先通过`yarn`来安装一下：
+```npm
+yarn add webpack-bundle-analyzer -D
+```
+然后在`plugins`中进行配置：  
+```js
+// webpack.prod.js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+module.exports = {
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ]
+}
+```
+这样当我们执行`yarn build`的时候，就会自动打开浏览器窗口，并为我们展示每个打包文件的体积：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-bundle-analysis.png)
+通过这个页面，我们可以很清楚的看到`lodash`占据了比较大的体积，而我们只是使用到了它的`join`方法，这就是我们可以想办法进行优化的一个点。
 
 ### 定义环境变量
+在上一小节中，我们使用了插件来进行打包文件分析，可是这样打包之后会包含一些映射文件，如果就这样将它们部署到服务器的话就会增大服务器的压力，进而可能会影响到页面的性能。
+
+为了解决这个问题，我们可以设置一个环境变量，通过使用不同的环境变量来应用不同的`webpack`插件，从而减少没有必要的打包插件。
+
+在`webpack`中我们可以在命令行中通过`--env`来指定任意的环境变量，之后我们就可以在`webpack.config.js`中访问到配置好的环境变量，然后根据不同变量来进行不同的操作。当使用环境变量后，我们的配置文件必须要写成一个函数：  
+```js
+// webpack.config.js
+module.exports = env => {
+  // Use env.<YOUR VARIABLE> here:
+  return {
+    // set some configuration here
+  }
+}
+```
+
+首先我们在`package.json`中添加新的打包命令，专门用来进行打包后的代码分析：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-env-mode-analysis.png)
+
+之后我们要根据配置好的环境变量来判断是否使用`BundleAnalyzerPlugin`插件：  
+```js
+// webpack.prod.js
+module.exports = (env) => {
+  return merge(baseConfig, {
+    mode: 'production',
+    devtool: 'cheap-module-source-map',
+    plugins: [
+      new CleanWebpackPlugin(),
+      env.MODE === 'analysis' && new BundleAnalyzerPlugin(),
+    ].filter(Boolean)
+  })
+}
+```
+最后我们会通过`Array.filter`方法来将数组中返回值为`false`的元素进行过滤。
+
+有些时候，我们还需要在项目中使用配置好的不同环境变量，这里我们需要`webpack.DefinePlugin`插件来进行创建编译时可以配置的全局常量：  
+```js
+// webpack.config.js
+module.exports = (env) => {
+  return {
+    plugins: [
+      // other plugins ...
+      new webpack.DefinePlugin({
+        // 写法规定：可以使用 '"production"' 或者使用 JSON.string('production')
+        'process.env.MODE': JSON.stringify(`${env.MODE}`)
+      })
+    ]
+  }
+};
+
+// webpack.dev/prod.js
+module.exports = (env) => {
+  // 将环境变量传入
+  return merge(baseConfig(env), {
+    // dev/prod webpack configuration
+  })
+}
+```
+这里我们将`webpack.config.js`改为了函数的形式，并将环境变量`env`传入进行使用，之后我们可以在浏览器控制台成功打印出配置好的环境变量：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-define-plugin.png)
+
+到这里，我们已经实现了通过环境变量来控制是否进行打包分析,并且可以在源代码中使用配置好的全局变量。
+
