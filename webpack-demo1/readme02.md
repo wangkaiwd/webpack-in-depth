@@ -163,8 +163,63 @@ optimization: {
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-split-chunk-all.png)
 
 ### `Prefetching和PreLoading`
+当进行了代码分割之后，有些分割后的模块可能并不需要进行立即加载，我们可以先将一些必要的内容先进性加载，之后再在浏览器和网络的空闲时间，加载其它内容。
 
+工作中的使用场景是这样的：我们经常用到的模态框组件，并不需要在页面一开始就加载资源，而是需要在用户点击之后才显示。所以我们可以将这部分资源在页面主要内容加载完成后，利用浏览器和网络的空闲时间来加载模态框对应的资源，可以很好的减少浏览器的压力，合理利用带宽资源来提高用户提验和页面加载性能。
 
+在`webpack`中为我们提供了`Prefetching`和`Preloading`这俩个方法来进行资源加载优化：  
+* `prefetch`: 加载的内容可能会在未来的任何时间被使用，它会在主文件加载完毕并且利用浏览器的空闲时间来进行资源请求
+* `preloading`: 加载的内容会被主文件立即用到，拥有中等程度的资源加载优先权，并且会在页面加载时立即和主文件平行使用浏览器提供的资源。
+
+这里我们分别通过`prefetch`和`preloading`来加载`lodash`和`dayjs`模块，看看它们之间的区别：  
+```js
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+class App extends Component {
+  state = {
+    number: 10,
+    text: '',
+    time: ''
+  }
+  componentDidMount = () => {
+  }
+  dynamicLodash = () => {
+    import(
+      /* webpackChunkName: "lodash" */
+      /* webpackPrefetch: true */
+      'lodash').then(({ default: _ }) => {
+        this.setState({ text: _.join([1, 2, 3], '-') })
+      })
+  }
+  dynamicDayjs = () => {
+    import(
+      /* webpackChunkName: "dayjs" */
+      /* webpackPreload: true */
+      'dayjs').then(({ default: dayjs }) => {
+        this.setState({ time: dayjs(new Date()) })
+      })
+  }
+  render() {
+    const { text, time } = this.state
+    return (
+      <div>
+        hello Webapck React
+        <h2>{this.state.number}</h2>
+        <h1>{text}</h1>
+        <h1>{time}</h1>
+        <button onClick={this.dynamicLodash}>load lodash</button>
+        <button onClick={this.dynamicDayjs}>load dayJs</button>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-preload-prefetch.png)
 ### `MiniCssExtractPlugin`拆分`css`代码
 
+
 ## 打包文件分析(`bundle analysis`)
+
+### 定义环境变量

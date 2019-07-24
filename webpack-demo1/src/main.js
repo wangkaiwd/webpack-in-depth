@@ -1,28 +1,39 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-// import _ from 'lodash'
 class App extends Component {
   state = {
     number: 10,
     text: '',
-    // text2: _.join([4, 5, 6], '-')
+    time: ''
   }
   componentDidMount = () => {
-    this.dynamicLodash()
   }
   dynamicLodash = () => {
-    import(/*webpackChunkName: "lodash"*/'lodash').then(({ default: _ }) => {
-      this.setState({ text: _.join([1, 2, 3], '-') })
-    })
+    import(
+      /* webpackChunkName: "lodash" */
+      /* webpackPrefetch: true */
+      'lodash').then(({ default: _ }) => {
+        this.setState({ text: _.join([1, 2, 3], '-') })
+      })
+  }
+  dynamicDayjs = () => {
+    import(
+      /* webpackChunkName: "dayjs" */
+      /* webpackPreload: true */
+      'dayjs').then(({ default: dayjs }) => {
+        this.setState({ time: dayjs().format() })
+      })
   }
   render() {
-    const { text, text2 } = this.state
+    const { text, time } = this.state
     return (
       <div>
         hello Webapck React
         <h2>{this.state.number}</h2>
         <h1>{text}</h1>
-        <h1>{text2}</h1>
+        <h1>{time}</h1>
+        <button onClick={this.dynamicLodash}>load lodash</button>
+        <button onClick={this.dynamicDayjs}>load dayJs</button>
       </div>
     )
   }
