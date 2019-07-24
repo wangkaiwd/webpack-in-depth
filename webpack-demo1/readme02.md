@@ -218,7 +218,61 @@ ReactDOM.render(<App />, document.getElementById('root'))
 ```
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-preload-prefetch.png)
 ### `MiniCssExtractPlugin`拆分`css`代码
+在上文中我们介绍了`JavaScript`代码的分割，这里我们介绍如何将`CSS`文件从`JavaScript`中分离出来，并通过`link`标签引入到`html-webpack-plugin`生成的`html`文件中。
 
+这需要使用到`webpack`的一个插件：`MiniCssExtractPlugin`。首先我们来安装它
+```npm
+yarn add mini-css-extract-plugin -D
+```
+然后进行如下配置：  
+```js
+// webpack.config.js
+// module.rules
+// 使用MiniCssExtractPlugin.loader来替换之前的style-loader
+{
+  test: /\.css$/,
+  use: [
+    MiniCssExtractPlugin.loader,
+    'css-loader',
+    'postcss-loader',
+  ]
+},
+{
+  test: /\.scss$/,
+  use: [
+    MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
+      options: {
+        // 开启css模块化
+        modules: true,
+        // 在css-loader前应用的loader的数量：确保在使用import语法前先经过sass-loader和postcss-loader的处理
+        importLoaders: 2
+      }
+    },
+    'postcss-loader',
+    'sass-loader'
+  ]
+},
+
+// 在插件中添加对应的配置，配置项和出口文件的配置内容相同
+// plugins:
+plugins: [
+  // 自动引入打包后的文件到html中：
+  //    对于每次打包都会重新通过hash值来生成文件名的情况特别适用
+  //    也可以通过template来生成一个我们自己定义的html模板，然后帮我们把打包后生成的文件引入
+  new HtmlWebpackPlugin({
+    filename: 'index.html', // 生成html文件的文件名
+    template: absPath('../index.html') // 使用的html模板
+  }),
+  new MiniCssExtractPlugin({
+    filename: '[name]_[hash:8].css',
+    chunkFilename: '[name]_[hash:8]_chunk.css',
+  }),
+]
+```
+可以看到已经成功将`css`文件进行了拆分并在`index.html`中引入：
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-extract-css.png)
 
 ## 打包文件分析(`bundle analysis`)
 

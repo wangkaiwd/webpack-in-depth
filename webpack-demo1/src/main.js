@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import './assets/styles/main.scss'
 class App extends Component {
   state = {
     number: 10,

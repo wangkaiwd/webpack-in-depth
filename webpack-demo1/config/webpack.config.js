@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const absPath = (dir) => path.resolve(__dirname, dir)
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
     path: absPath('../dist'), // 打包生成文件存放的位置
     // 使用每次构建过程中，唯一的hash生成
     filename: '[name]_[hash:8].js', // 每个打包输出文件的名称
+    chunkFilename: '[name]_[hash:8]_chunk.js',
     // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
   },
   module: {
@@ -26,7 +28,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
         ]
@@ -34,7 +36,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -135,6 +137,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html', // 生成html文件的文件名
       template: absPath('../index.html') // 使用的html模板
-    })
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name]_[hash:8].css',
+      chunkFilename: '[name]_[hash:8]_chunk.css',
+    }),
   ]
 };
