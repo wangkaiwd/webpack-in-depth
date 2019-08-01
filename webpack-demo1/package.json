@@ -4,9 +4,10 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "webpack --config ./config/webpack.prod.js",
-    "build:dev": "rm -rf ./dist && webpack --config ./config/webpack.dev.js",
-    "start": "webpack-dev-server --config ./config/webpack.dev.js"
+    "build": "webpack --env.MODE=prod --config ./config/webpack.prod.js",
+    "build:dev": "rm -rf ./dist && webpack --env.MODE=dev --config ./config/webpack.dev.js",
+    "build:analysis": "webpack --env.MODE=analysis --config ./config/webpack.prod.js",
+    "start": "webpack-dev-server --env.MODE=dev --config ./config/webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -20,18 +21,21 @@
     "css-loader": "^3.0.0",
     "file-loader": "^4.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.1",
     "webpack": "^4.35.2",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2",
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "core-js": "2",
+    "dayjs": "^1.8.15",
     "lodash": "^4.17.15",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"

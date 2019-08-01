@@ -163,8 +163,201 @@ optimization: {
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-split-chunk-all.png)
 
 ### `Prefetching和PreLoading`
+当进行了代码分割之后，有些分割后的模块可能并不需要进行立即加载，我们可以先将一些必要的内容先进性加载，之后再在浏览器和网络的空闲时间，加载其它内容。
 
+工作中的使用场景是这样的：我们经常用到的模态框组件，并不需要在页面一开始就加载资源，而是需要在用户点击之后才显示。所以我们可以将这部分资源在页面主要内容加载完成后，利用浏览器和网络的空闲时间来加载模态框对应的资源，可以很好的减少浏览器的压力，合理利用带宽资源来提高用户提验和页面加载性能。
 
+在`webpack`中为我们提供了`Prefetching`和`Preloading`这俩个方法来进行资源加载优化：  
+* `prefetch`: 加载的内容可能会在未来的任何时间被使用，它会在主文件加载完毕并且利用浏览器的空闲时间来进行资源请求
+* `preloading`: 加载的内容会被主文件立即用到，拥有中等程度的资源加载优先权，并且会在页面加载时立即和主文件平行使用浏览器提供的资源。
+
+这里我们分别通过`prefetch`和`preloading`来加载`lodash`和`dayjs`模块，看看它们之间的区别：  
+```js
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+class App extends Component {
+  state = {
+    number: 10,
+    text: '',
+    time: ''
+  }
+  componentDidMount = () => {
+  }
+  dynamicLodash = () => {
+    import(
+      /* webpackChunkName: "lodash" */
+      /* webpackPrefetch: true */
+      'lodash').then(({ default: _ }) => {
+        this.setState({ text: _.join([1, 2, 3], '-') })
+      })
+  }
+  dynamicDayjs = () => {
+    import(
+      /* webpackChunkName: "dayjs" */
+      /* webpackPreload: true */
+      'dayjs').then(({ default: dayjs }) => {
+        this.setState({ time: dayjs(new Date()) })
+      })
+  }
+  render() {
+    const { text, time } = this.state
+    return (
+      <div>
+        hello Webapck React
+        <h2>{this.state.number}</h2>
+        <h1>{text}</h1>
+        <h1>{time}</h1>
+        <button onClick={this.dynamicLodash}>load lodash</button>
+        <button onClick={this.dynamicDayjs}>load dayJs</button>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-preload-prefetch.png)
 ### `MiniCssExtractPlugin`拆分`css`代码
+在上文中我们介绍了`JavaScript`代码的分割，这里我们介绍如何将`CSS`文件从`JavaScript`中分离出来，并通过`link`标签引入到`html-webpack-plugin`生成的`html`文件中。
+
+这需要使用到`webpack`的一个插件：`MiniCssExtractPlugin`。首先我们来安装它
+```npm
+yarn add mini-css-extract-plugin -D
+```
+然后进行如下配置：  
+```js
+// webpack.config.js
+// module.rules
+// 使用MiniCssExtractPlugin.loader来替换之前的style-loader
+{
+  test: /\.css$/,
+  use: [
+    MiniCssExtractPlugin.loader,
+    'css-loader',
+    'postcss-loader',
+  ]
+},
+{
+  test: /\.scss$/,
+  use: [
+    MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
+      options: {
+        // 开启css模块化
+        modules: true,
+        // 在css-loader前应用的loader的数量：确保在使用import语法前先经过sass-loader和postcss-loader的处理
+        importLoaders: 2
+      }
+    },
+    'postcss-loader',
+    'sass-loader'
+  ]
+},
+
+// 在插件中添加对应的配置，配置项和出口文件的配置内容相同
+// plugins:
+plugins: [
+  // 自动引入打包后的文件到html中：
+  //    对于每次打包都会重新通过hash值来生成文件名的情况特别适用
+  //    也可以通过template来生成一个我们自己定义的html模板，然后帮我们把打包后生成的文件引入
+  new HtmlWebpackPlugin({
+    filename: 'index.html', // 生成html文件的文件名
+    template: absPath('../index.html') // 使用的html模板
+  }),
+  new MiniCssExtractPlugin({
+    filename: '[name]_[hash:8].css',
+    chunkFilename: '[name]_[hash:8]_chunk.css',
+  }),
+]
+```
+可以看到已经成功将`css`文件进行了拆分并在`index.html`中引入：
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-extract-css.png)
 
 ## 打包文件分析(`bundle analysis`)
+在我们把代码打包好将要部署到服务器之前，如果想要看一下各个模块打包后的体积大小的话，需要分析`webpack`的打包输出结果。官方文档相关知识在这里：[传送门](https://webpack.js.org/guides/code-splitting/#bundle-analysis)。
+
+这里我们通过官方推荐的插件[`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer)来进行打包体积分析。
+
+还是熟悉的套路，我们需要先通过`yarn`来安装一下：
+```npm
+yarn add webpack-bundle-analyzer -D
+```
+然后在`plugins`中进行配置：  
+```js
+// webpack.prod.js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+module.exports = {
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ]
+}
+```
+这样当我们执行`yarn build`的时候，就会自动打开浏览器窗口，并为我们展示每个打包文件的体积：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-bundle-analysis.png)
+通过这个页面，我们可以很清楚的看到`lodash`占据了比较大的体积，而我们只是使用到了它的`join`方法，这就是我们可以想办法进行优化的一个点。
+
+### 定义环境变量
+在上一小节中，我们使用了插件来进行打包文件分析，可是这样打包之后会包含一些映射文件，如果就这样将它们部署到服务器的话就会增大服务器的压力，进而可能会影响到页面的性能。
+
+为了解决这个问题，我们可以设置一个环境变量，通过使用不同的环境变量来应用不同的`webpack`插件，从而减少没有必要的打包插件。
+
+在`webpack`中我们可以在命令行中通过`--env`来指定任意的环境变量，之后我们就可以在`webpack.config.js`中访问到配置好的环境变量，然后根据不同变量来进行不同的操作。当使用环境变量后，我们的配置文件必须要写成一个函数：  
+```js
+// webpack.config.js
+module.exports = env => {
+  // Use env.<YOUR VARIABLE> here:
+  return {
+    // set some configuration here
+  }
+}
+```
+
+首先我们在`package.json`中添加新的打包命令，专门用来进行打包后的代码分析：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-env-mode-analysis.png)
+
+之后我们要根据配置好的环境变量来判断是否使用`BundleAnalyzerPlugin`插件：  
+```js
+// webpack.prod.js
+module.exports = (env) => {
+  return merge(baseConfig, {
+    mode: 'production',
+    devtool: 'cheap-module-source-map',
+    plugins: [
+      new CleanWebpackPlugin(),
+      env.MODE === 'analysis' && new BundleAnalyzerPlugin(),
+    ].filter(Boolean)
+  })
+}
+```
+最后我们会通过`Array.filter`方法来将数组中返回值为`false`的元素进行过滤。
+
+有些时候，我们还需要在项目中使用配置好的不同环境变量，这里我们需要`webpack.DefinePlugin`插件来进行创建编译时可以配置的全局常量：  
+```js
+// webpack.config.js
+module.exports = (env) => {
+  return {
+    plugins: [
+      // other plugins ...
+      new webpack.DefinePlugin({
+        // 写法规定：可以使用 '"production"' 或者使用 JSON.string('production')
+        'process.env.MODE': JSON.stringify(`${env.MODE}`)
+      })
+    ]
+  }
+};
+
+// webpack.dev/prod.js
+module.exports = (env) => {
+  // 将环境变量传入
+  return merge(baseConfig(env), {
+    // dev/prod webpack configuration
+  })
+}
+```
+这里我们将`webpack.config.js`改为了函数的形式，并将环境变量`env`传入进行使用，之后我们可以在浏览器控制台成功打印出配置好的环境变量：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-define-plugin.png)
+
+到这里，我们已经实现了通过环境变量来控制是否进行打包分析,并且可以在源代码中使用配置好的全局变量。
+

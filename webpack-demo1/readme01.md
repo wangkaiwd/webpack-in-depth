@@ -58,11 +58,12 @@ entry: {
   main: './src/main.js' // 入口文件对应的源代码位置，key值为打包生成后的chunkNames
 },
 output: {
-  path: path.resolve(__dirname, './dist'), // 打包生成文件存放的位置
+  path: absPath('../dist'), // 打包生成文件存放的位置
   // 使用每次构建过程中，唯一的hash生成
-  filename: '[name]_[hash].js', // 每个打包输出文件的名称
+  filename: '[name]_[hash:8].js', // 每个打包输出文件的名称
+  chunkFilename: '[name]_[hash:8]_chunk.js', // 非入口chunk文件的名称(及通过代码分割从入口文件分割出来的文件打包名称)
   // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
-}
+},
 ```
 在配置文件中我们使用了`[name]`这种符号，这是`webpack`中的占位符(`placeholder`)，这里介绍下配置中使用到的，如果小伙伴们感兴趣可以自己查阅官方文档：  
 * `[name]`: 模块名称
