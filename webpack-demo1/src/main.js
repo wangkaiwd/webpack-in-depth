@@ -1,34 +1,38 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import './assets/styles/main.scss'
-console.log('MODE', process.env.MODE)
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import './assets/styles/main.scss';
+
+console.log('MODE', process.env.MODE);
+console.log('hello webpack');
 
 class App extends Component {
   state = {
     number: 12,
     text: '',
     time: ''
-  }
+  };
   componentDidMount = () => {
-  }
+  };
   dynamicLodash = () => {
     import(
       /* webpackChunkName: "lodash" */
       /* webpackPrefetch: true */
       'lodash').then(({ default: _ }) => {
-        this.setState({ text: _.join([1, 2, 3], '-') })
-      })
-  }
+      this.setState({ text: _.join([1, 2, 3], '-') });
+    });
+  };
   dynamicDayjs = () => {
     import(
       /* webpackChunkName: "dayjs" */
       /* webpackPreload: true */
-      'dayjs').then(({ default: dayjs }) => {
-        this.setState({ time: dayjs().format() })
-      })
-  }
-  render() {
-    const { text, time } = this.state
+      'dayjs'
+      ).then(({ default: dayjs }) => {
+      this.setState({ time: dayjs().format() });
+    });
+  };
+
+  render () {
+    const { text, time } = this.state;
     return (
       <div>
         hello Webapck React
@@ -38,11 +42,11 @@ class App extends Component {
         <button onClick={this.dynamicLodash}>load lodash</button>
         <button onClick={this.dynamicDayjs}>load dayJs</button>
       </div>
-    )
+    );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App/>, document.getElementById('root'));
 // import { add } from './utils/math'
 
 // add();

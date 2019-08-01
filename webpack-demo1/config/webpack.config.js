@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
-const absPath = (dir) => path.resolve(__dirname, dir)
+const absPath = (dir) => path.resolve(__dirname, dir);
 module.exports = (env) => {
   return {
     entry: {
@@ -20,12 +20,17 @@ module.exports = (env) => {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true
+              }
+            },
+            {
+              loader: absPath('../loaders/syncLoader')
             }
-          }
+          ]
         },
         {
           test: /\.css$/,
@@ -149,5 +154,5 @@ module.exports = (env) => {
         'process.env.MODE': JSON.stringify(`${env.MODE}`)
       })
     ]
-  }
+  };
 };
