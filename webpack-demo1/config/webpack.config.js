@@ -26,18 +26,7 @@ module.exports = (env) => {
               options: {
                 cacheDirectory: true
               }
-            },
-            // 通过syncLoader将js文件中的webpack同步替换为webpack-loader
-            // 然后通过syncLoader将js中的webpack-loader异步替换为options中的name属性
-            // {
-            //   loader: absPath('../loaders/asyncLoader'),
-            //   options: {
-            //     name: 'wangkaiwd'
-            //   }
-            // },
-            // {
-            //   loader: absPath('../loaders/syncLoader'),
-            // }
+            }
           ]
         },
         {

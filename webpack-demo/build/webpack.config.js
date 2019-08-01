@@ -3,19 +3,33 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const AutoDllPlugin = require('autodll-webpack-plugin');
 const webpack = require('webpack');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const path = require('path')
+const path = require('path');
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 module.exports = {
   entry: {
     main: './src/main.tsx',
   },
-  stats: "errors-only",
+  stats: 'errors-only',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        use: [
+          'babel-loader',
+          // 通过syncLoader将js文件中的webpack同步替换为webpack-loader
+          // 然后通过syncLoader将js中的webpack-loader异步替换为options中的name属性
+          // {
+          //   loader: absPath('../loaders/asyncLoader'),
+          //   options: {
+          //     name: 'wangkaiwd'
+          //   }
+          // },
+          // {
+          //   loader: absPath('../loaders/syncLoader'),
+          // }
+        ],
+
       },
       {
         test: /\.tsx?$/,
@@ -115,4 +129,4 @@ module.exports = {
       }
     })
   ]
-}
+};

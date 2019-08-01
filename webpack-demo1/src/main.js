@@ -35,7 +35,7 @@ class App extends Component {
     const { text, time } = this.state;
     return (
       <div>
-        hello Webapck React
+        hello Webpack React
         <h2>{this.state.number}</h2>
         <h1>{text}</h1>
         <h1>{time}</h1>
