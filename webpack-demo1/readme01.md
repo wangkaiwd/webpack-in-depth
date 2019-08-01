@@ -626,4 +626,6 @@ ReactDOM.render(<App />, document.getElementById('root'))
 执行`yarn start`命令：  
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-react.png)
 
+到这里为止,我们已经可以搭建一个简单的`react`开发环境，之后我们可以继续学习一些`webpack`的高级概念。
+
 
