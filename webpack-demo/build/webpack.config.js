@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const AutoDllPlugin = require('autodll-webpack-plugin');
 const webpack = require('webpack');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CopyRightPlugin = require('../plugin/demo');
 const path = require('path');
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 module.exports = {
@@ -101,7 +102,7 @@ module.exports = {
       filename: 'index.html',
       template: './index.html'
     }),
-
+    new CopyRightPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
       // 使用全局变量_来代替lodash: shimming globals:https://webpack.js.org/guides/shimming/#shimming-globals
