@@ -1,7 +1,7 @@
 {
-  "name": "webpack-demo1",
-  "version": "1.0.0",
-  "private": true,
+  "name": "webpack-demo1-001",
+  "version": "0.0.1",
+  "main": "",
   "license": "MIT",
   "scripts": {
     "build": "webpack --env.MODE=prod --config ./config/webpack.prod.js",
