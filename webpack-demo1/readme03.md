@@ -47,29 +47,93 @@ externals: { // 防止将某些import的包(package.json)打包到bundle中，�
 我们执行`yarn publish`命令，第一次需要用户名和密码。每一次都需要输入对应的版本号:  
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-yarn-publish.png)
 ### 项目中使用`pwa`
+`PWA`的全称是渐进式网络应用程序(`Progreessive Web Application`),是一种可以提供类似于原生应用程序(`native app`)体验的网络应用程序(`web app`)。
 
-## 优化命令行构建信息
+`PWA`中比较重要的一个功能是借助`Service Workers`的网络技术在离线(`offline`)时让应用程序能够继续运行功能。
 
-## 项目中使用`TypeScript`
+这里我们使用`workbox-webpack-plugin`:  
+```npm
+yarn add workbox-webpack-plugin -D
+```
 
-## `webpack`性能优化小结
+在生产环境配置`PWA`，是项目支持离线访问:
+```js
+// webpack.prod.js
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.config')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const WorkboxPlugin = require('workbox-webpack-plugin');
+module.exports = (env) => {
+  return merge(baseConfig(env), {
+    mode: 'production',
+    devtool: 'cheap-module-source-map',
+    plugins: [
+      new CleanWebpackPlugin(),
+      env.MODE === 'analysis' && new BundleAnalyzerPlugin(),
+      new WorkboxPlugin.GenerateSW({
+        // 这些选项帮助 ServiceWorkers 快速启用
+        // 不允许遗留任何“旧的” ServiceWorkers
+        clientsClaim: true,
+        skipWaiting: true
+      })
+    ].filter(Boolean)
+  })
+}
+```
 
-### 跟上技术的迭代(`Node,Yarn,Npm`)
+在入口文件中注册`serviceWorker`:  
+```js
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(
+      registration => {
+        console.log('SW registered:', registration)
+      }
+    ).catch(
+      registrationError => {
+        console.log('SW registered failed:', registrationError)
+      }
+    )
+  })
+}
+```
 
-### 在尽可能少的模块上应用`loader`
+打包代码并通过启动一个`server`来运行代码：  
+> 笔者使用[`serve`](https://github.com/zeit/serve)来搭建静态服务，有兴趣的小伙伴可以了解一下
+```npm
+yarn build
+npx serve -s dist
+```
 
-### `Plugin`尽可能精简并确保可靠性
+之后我们停止`server`并刷新页面，发现页面还可以正常访问：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-service-worker.png)
 
-### `resolve`参数合理配置
+可以在浏览器中查看对应的信息：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-chrome-service-workers.png)
 
-### 使用`DllPlugin`提高打包速度
+### 优化命令行构建信息
 
-### 控制包文件大小
+### 项目中使用`TypeScript`
 
-### 多进程打包：`thread-loader`,`parallel-webpack`,`happypack`
+### `webpack`性能优化小结
 
-### 合理使用`source map`
+#### 跟上技术的迭代(`Node,Yarn,Npm`)
 
-### 结合`stats`分析打包结果
+#### 在尽可能少的模块上应用`loader`
 
-### 开发环境内存编译
+#### `Plugin`尽可能精简并确保可靠性
+
+#### `resolve`参数合理配置
+
+#### 使用`DllPlugin`提高打包速度
+
+#### 控制包文件大小
+
+#### 多进程打包：`thread-loader`,`parallel-webpack`,`happypack`
+
+#### 合理使用`source map`
+
+#### 结合`stats`分析打包结果
+
+#### 开发环境内存编译

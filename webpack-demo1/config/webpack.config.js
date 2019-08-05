@@ -11,8 +11,8 @@ module.exports = (env) => {
     output: {
       path: absPath('../dist'), // 打包生成文件存放的位置
       // 使用每次构建过程中，唯一的hash生成
-      filename: '[name]_[hash:8].js', // 每个打包输出文件的名称
-      chunkFilename: '[name]_[hash:8]_chunk.js', // 非入口chunk文件的名称(及通过代码分割从入口文件分割出来的文件打包名称)
+      filename: 'static/js/[name]_[hash:8].js', // 每个打包输出文件的名称
+      chunkFilename: 'static/js/[name]_[hash:8]_chunk.js', // 非入口chunk文件的名称(及通过代码分割从入口文件分割出来的文件打包名称)
       // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
     },
     module: {
@@ -143,8 +143,8 @@ module.exports = (env) => {
         template: absPath('../index.html') // 使用的html模板
       }),
       new MiniCssExtractPlugin({
-        filename: '[name]_[hash:8].css',
-        chunkFilename: '[name]_[hash:8]_chunk.css',
+        filename: 'static/css/[name]_[hash:8].css',
+        chunkFilename: 'static/css/[name]_[hash:8]_chunk.css',
       }),
       new webpack.DefinePlugin({
         // 写法规定：可以使用 '"production"' 或者使用 JSON.string('production')
