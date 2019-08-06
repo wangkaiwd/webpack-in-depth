@@ -4,13 +4,12 @@ import ReactDOM from 'react-dom';
 const App = () => {
   return (
     <div>
-      TypeScript
-      {/* React hooks & TypeScript */}
+      React hooks & TypeScript
     </div>
   )
 }
 ReactDOM.render(<App />, document.querySelector('#root'))
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && process.env.MODE === 'prod') {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js').then(
       registration => {
