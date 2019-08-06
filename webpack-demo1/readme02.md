@@ -266,8 +266,8 @@ plugins: [
     template: absPath('../index.html') // 使用的html模板
   }),
   new MiniCssExtractPlugin({
-    filename: '[name]_[hash:8].css',
-    chunkFilename: '[name]_[hash:8]_chunk.css',
+    filename: 'static/css/[name]_[hash:8].css',
+    chunkFilename: 'static/css/[name]_[hash:8]_chunk.css',
   }),
 ]
 ```

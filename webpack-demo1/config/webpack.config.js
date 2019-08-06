@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const absPath = (dir) => path.resolve(__dirname, dir);
@@ -15,8 +16,17 @@ module.exports = (env) => {
       chunkFilename: 'static/js/[name]_[hash:8]_chunk.js', // 非入口chunk文件的名称(及通过代码分割从入口文件分割出来的文件打包名称)
       // publicPath: 'https://cdn.example.com/assets/', // 会在引入的资源前加入该路径，例：将资源托管到cnd
     },
+    stats: 'errors-only',
+    resolve: {
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
+    },
     module: {
       rules: [
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/
+        },
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -149,7 +159,8 @@ module.exports = (env) => {
       new webpack.DefinePlugin({
         // 写法规定：可以使用 '"production"' 或者使用 JSON.string('production')
         'process.env.MODE': JSON.stringify(`${env.MODE}`)
-      })
+      }),
+      new FriendlyErrorsWebpackPlugin()
     ]
   };
 };

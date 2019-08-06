@@ -21,6 +21,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.0.0",
     "file-loader": "^4.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "loader-utils": "^1.2.3",
     "mini-css-extract-plugin": "^0.8.0",
@@ -28,6 +29,7 @@
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "ts-loader": "^6.0.4",
     "url-loader": "^2.0.1",
     "webpack": "^4.35.2",
     "webpack-bundle-analyzer": "^3.3.2",
@@ -41,6 +43,7 @@
     "dayjs": "^1.8.15",
     "lodash": "^4.17.15",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "typescript": "^3.5.3"
   }
 }

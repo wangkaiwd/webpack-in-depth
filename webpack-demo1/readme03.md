@@ -113,8 +113,69 @@ npx serve -s dist
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-chrome-service-workers.png)
 
 ### 优化命令行构建信息
+当我们打包的时候，命令行会提示很多没有用的信息，导致输出信息比较乱。
+
+`webpack`中我们可以通过`stats`来进行打包输出信息的控制：
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-stats.png)
+
+我们希望在打包发生错误时命令行才会输出信息：  
+```js
+stats: 'errors-only'
+```
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-build-no-output.png)
+
+这样打包后命令行什么信息都没有提示，而我们可能想要看到一个成功信息，`friendly-errors-webpack-plugin`插件可以用来完成这个功能：  
+```npm
+yarn add friendly-errors-webpack-plugin -D
+```
+
+在`webpack`中使用：  
+```js
+...
+plugins: [
+  ...
+  new FriendlyErrorsWebpackPlugin()
+  ...
+]
+...
+```
+
+打包效果：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-plugin-output.png)
 
 ### 项目中使用`TypeScript`
+
+在2019年里，比较火的就是`TypeScript`，它可以很好的指定`JavaScript`的类型而且有更好的编辑器提示。
+
+首先在项目中安装`TypeScript`,并且在根目录建立一个`tsconfig.json`: 
+```npm
+yarn add typescript
+npx tsc --init
+```
+
+然后配置识别`.ts,.tsx`文件的`loader`，并添加文件后缀省略：  
+```js
+// webpack.config.js中新增如下配置
+module: {
+  rules: [
+    {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
+    }
+  ]
+},
+resolve: {
+  extensions: [ '.tsx', '.ts', '.js' ]
+}
+```
+
+之后我们在项目中使用`TypeScript`写一个`hello world`：  
+```ts
+const a: string = 'hello ts';
+console.log(a)
+```
+浏览器中成功打印：  
 
 ### `webpack`性能优化小结
 

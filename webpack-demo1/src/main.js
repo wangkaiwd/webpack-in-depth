@@ -1,4 +1,4 @@
-export * from './utils/math'
+import './demo';
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js').then(
