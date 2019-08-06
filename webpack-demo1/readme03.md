@@ -176,8 +176,10 @@ const a: string = 'hello ts';
 console.log(a)
 ```
 浏览器中成功打印：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-ts-hello.png)
 
 ### `webpack`性能优化小结
+经过前面知识的学习，这里我们主要来讲一下`webpack`的性能优化
 
 #### 跟上技术的迭代(`Node,Yarn,Npm`)
 

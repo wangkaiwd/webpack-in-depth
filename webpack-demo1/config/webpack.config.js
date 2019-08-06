@@ -7,7 +7,7 @@ const absPath = (dir) => path.resolve(__dirname, dir);
 module.exports = (env) => {
   return {
     entry: {
-      main: absPath('../src/main.js') // 入口文件对应的源代码位置，key值为打包生成后的chunkNames
+      main: absPath('../src/main.tsx') // 入口文件对应的源代码位置，key值为打包生成后的chunkNames
     },
     output: {
       path: absPath('../dist'), // 打包生成文件存放的位置
