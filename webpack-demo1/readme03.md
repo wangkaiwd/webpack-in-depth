@@ -191,14 +191,35 @@ console.log(a)
 
 当完成这俩步之后，我们基本可以找出花费时间长和体积比较大的模块就可以进行针对有化。
 
-#### 跟上技术的迭代(`Node,Yarn,Npm`)
+#### 跟上技术的迭代(`Webpack,Node,Yarn,Npm`)
+前端社区一直在前进，社区的开发者都会不断的优化自己的开源项目，不断修复过去存在的问题并不断进行性能方面的优化。
 
-
-#### 在尽可能少的模块上应用`loader`
-
-#### `Plugin`尽可能精简并确保可靠性
+所以当我们使用比较新的工具时，就会体验到相较于之前版本更快的编译速度和解析时间，从而优化打包性能
+#### 合理使用`loader`和`plugin`
+`loader`和`plugin`使用之后会占用一定的性能，为了让他们占用的性能更少，推荐以下做法：  
+* 确保使用的`loader`和`plugin`的可靠性： 最好使用官方推荐的
+* 合理进行`loader`和`plugin`的配置:  比如我们可以为`babel-loader`设置缓存
+* 保证`loader`和`plugin`的使用精简： 有些`loader`和`plugin`可能会用到开发环境，而生产环境不需要，我们需要进行合理精简
 
 #### `resolve`参数合理配置
+合理的配置`resolve`选项可以提升打包的速度。
+
+比如我们经常在项目中会配置`webpack`引入文件的扩展名后缀：  
+```js
+...
+resolve: {
+  extensions: ['.js', '.jsx', '.ts', '.tsx']
+}
+...
+```
+之后我们就可以这样写代码：  
+```js
+import demo1 from './demo1'; // demo1.js
+import demo2 from './demo2'; // demo2.jsx
+import demo3 from './demo3'; // demo3.ts
+import demo4 from './demo4'; // demo4.tsx
+```
+这里我们也可以将`.css,.png,.jpg`等也进行配置，让我们引用这些文件的时候也更加的方便。但是当我们配置的扩展后缀变多之后,`webpack`会花费比较多的时间来分析文件后缀，导致打包时间增加。
 
 #### 使用`DllPlugin`提高打包速度
 
