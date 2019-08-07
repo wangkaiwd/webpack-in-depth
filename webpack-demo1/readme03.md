@@ -179,9 +179,20 @@ console.log(a)
 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-ts-hello.png)
 
 ### `webpack`性能优化小结
-经过前面知识的学习，这里我们主要来讲一下`webpack`的性能优化
+经过前面知识的学习，这里我们主要来讲一下`webpack`的性能优化。
+
+`webpack`的优化一般分为2个方面：  
+* 打包速度优化
+* 打包生成代码体积优化
+
+对于打包速度优化，我们可以使用`speed-measure-webpack-plugin`来查看打包时各个`loader`和`plugin`花费的时间。
+
+而针对于打包生成代码体积优化，我们可以使用`webpack-bundle-analyzer`来查看打包后各个模块的体积。
+
+当完成这俩步之后，我们基本可以找出花费时间长和体积比较大的模块就可以进行针对有化。
 
 #### 跟上技术的迭代(`Node,Yarn,Npm`)
+
 
 #### 在尽可能少的模块上应用`loader`
 
