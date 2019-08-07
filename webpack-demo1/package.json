@@ -8,6 +8,7 @@
     "build:dev": "rm -rf ./dist && webpack --env.MODE=dev --config ./config/webpack.dev.js",
     "build:analysis": "webpack --env.MODE=analysis --config ./config/webpack.prod.js",
     "build:library": "webpack --env.MODE=lirary --config ./config/webpack.library.js",
+    "build:dll": "rm -rf ./dll && webpack --config ./config/webpack.dll.js",
     "start": "webpack-dev-server --env.MODE=dev --config ./config/webpack.dev.js"
   },
   "devDependencies": {
@@ -38,14 +39,14 @@
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2",
     "webpack-merge": "^4.2.1",
-    "workbox-webpack-plugin": "^4.3.1"
+    "workbox-webpack-plugin": "^4.3.1",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "core-js": "2",
     "dayjs": "^1.8.15",
     "lodash": "^4.17.15",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "typescript": "^3.5.3"
+    "react-dom": "^16.8.6"
   }
 }

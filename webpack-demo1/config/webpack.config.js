@@ -160,7 +160,10 @@ module.exports = (env) => {
         // 写法规定：可以使用 '"production"' 或者使用 JSON.string('production')
         'process.env.MODE': JSON.stringify(`${env.MODE}`)
       }),
-      new FriendlyErrorsWebpackPlugin()
+      new FriendlyErrorsWebpackPlugin(),
+      new webpack.DllReferencePlugin({
+        manifest: require(absPath('../dll/manifest.json'))
+      })
     ]
   };
 };
