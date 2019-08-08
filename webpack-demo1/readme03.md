@@ -222,13 +222,78 @@ import demo4 from './demo4'; // demo4.tsx
 这里我们也可以将`.css,.png,.jpg`等也进行配置，让我们引用这些文件的时候也更加的方便。但是当我们配置的扩展后缀变多之后,`webpack`会花费比较多的时间来分析文件后缀，导致打包时间增加。
 
 #### 使用`DllPlugin`提高打包速度
+在我们日常工作中，会用到很多来自于`npm`的第三方模块，大多数情况下我们是不会去更改这些第三方模块的代码的，只在少数情况对这些模块进行版本升级。
+
+而`webpack`并不知道这些模块不会发生变化，`webpack`会在我们每次打包和重新打包的时候对所有依赖项进行分析和编译，这会花费很多的时间。
+
+`DllPlugin`能够让我们单独配置一个`webpack`配置文件来单独提前打包这些不会经常发生变化的文件。它会生成一个`manifest.json`文件，用来让`DLLReferencePlugin`将相关的依赖映射到主`webpack`配置中。
+
+这样配置之后，`webpack`就不会再打包`DllPlugin`处理过的文件，而是直接将打包好的内容直接进行引用。这样就可以节省很多用来处理这些不经常变动文件的时间，从而大幅提升打包速度。
+
+首先我们需要再新建一个`webpack.dll.js`配置文件： 
+```js
+const path = require('path');
+const webpack = require('webpack');
+const absPath = (dir) => path.resolve(__dirname, dir);
+const package = require('../package.json');
+module.exports = {
+  mode: 'production',
+  entry: {
+    // 将所有生产环境依赖项都进行提前打包：react,react-dom,lodash,dayjs,core-js
+    vendor: Object.keys(package.dependencies)
+  },
+  // 设置打包生成文件存放目录
+  output: {
+    path: absPath('../dll'),
+    filename: '[name]_[hash].dll.js',
+    // 这里要将打包内容进行暴露
+    library: '[name]_[hash]'
+  },
+  plugins: [
+    // 
+    new webpack.DllPlugin({
+      // name: 对应output中library暴露的全局变量，分析生成manifest.json
+      name: "[name]_[hash]",
+      path: absPath("../dll/manifest.json"),
+    })
+  ]
+}
+```
+
+在`package.json`中配置快捷方式：  
+```json
+{
+  "build:dll": "rm -rf ./dll && webpack --config ./config/webpack.dll.js",
+}
+```
+使用`yarn build:dll`提前打包不经常变动的文件。
+
+使用`add-asset-html-webpack-plugin`结合`DllReferencePlugin`来引入提前打包好的文件：  
+```npm
+yarn add add-asset-html-webpack-plugin -D
+```
+
+```js
+// webpack.config.js
+...
+plugins: [
+  // 将打包后的js文件引入到html中
+  new AddAssetHtmlPlugin({
+    filepath: absPath('../dll/*.dll.js'),
+  }),
+  // 分析manifest.json文件来映射到项目中的相关依赖
+  new webpack.DllReferencePlugin({
+    manifest: require(absPath('../dll/manifest.json'))
+  })
+]
+...
+```
+当随着安装依赖渐渐变多，项目逐渐扩大的时候，`DllPlugin`的优势会逐渐显示出来。
 
 #### 控制包文件大小
 
 #### 多进程打包：`thread-loader`,`parallel-webpack`,`happypack`
 
 #### 合理使用`source map`
-
-#### 结合`stats`分析打包结果
 
 #### 开发环境内存编译

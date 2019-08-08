@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const absPath = (dir) => path.resolve(__dirname, dir);
@@ -161,6 +162,11 @@ module.exports = (env) => {
         'process.env.MODE': JSON.stringify(`${env.MODE}`)
       }),
       new FriendlyErrorsWebpackPlugin(),
+      // 将打包后的js文件引入到html中
+      new AddAssetHtmlPlugin({
+        filepath: absPath('../dll/*.dll.js'),
+      }),
+      // 分析manifest.json文件来映射到项目中的相关依赖
       new webpack.DllReferencePlugin({
         manifest: require(absPath('../dll/manifest.json'))
       })
