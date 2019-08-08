@@ -291,9 +291,19 @@ plugins: [
 当随着安装依赖渐渐变多，项目逐渐扩大的时候，`DllPlugin`的优势会逐渐显示出来。
 
 #### 控制包文件大小
+小即是快！
 
-#### 多进程打包：`thread-loader`,`parallel-webpack`,`happypack`
+当我们的项目体积比较小的话，打包速度也会比较快，所以我们要尽量使用按需引入以及避免使用不必要的依赖来减小代码体积，侧面提升打包速度。
 
 #### 合理使用`source map`
+当启用不同的`source map`的时候会很大程度上影响`webpack`的打包速度。
+
+所以我们要通过合理的配置做到又不会较大的影响打包速度还能方便我们`debug`，快速定位到错误代码的源文件位置。
+
+常用的配置如下：  
+* `development`: `cheap-module-eval-source-map`
+* `production`: `cheap-module-source-map`
 
 #### 开发环境内存编译
+
+在开发环境中，我们使用`webpack-dev-server`,它并没有真的生成打包文件，而是将打包文件存入电脑的内存中，提升了编译速度。
