@@ -290,6 +290,18 @@ plugins: [
 ```
 当随着安装依赖渐渐变多，项目逐渐扩大的时候，`DllPlugin`的优势会逐渐显示出来。
 
+当然，你可能感觉`DllPlugin`的配置过程有些复杂，不用担心，开源社区中有现成的`plugin`来帮我们实现这个功能： [`autodll-webpack-plugin`](https://github.com/asfktz/autodll-webpack-plugin)
+
+#### 合理利用缓存
+在实际开发中，我们每次启动项目和打包项目时，其实做的改动并不是很大。所以我们如果能够合理将之前打包结果进行合理缓存，那么下一次打包就可以很好的利用之前的缓存，提高打包速度。
+
+在一些`loader`或者`plugin`的配置中会有缓存选项，如我们常用的`babel-loader`：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/webpack-cache-babel-loader.png)
+
+社区也有很好用的插件来为我们缓存`webpack`内部模块的处理步骤： [`HardSourceWebpackPlugin`](https://github.com/mzgoddard/hard-source-webpack-plugin)
+
+当然，由于缓存的存在也会多多少少引发一些异常的`bug`，所以我们也应该适时的清空缓存。
+
 #### 控制包文件大小
 小即是快！
 
