@@ -1,5 +1,25 @@
 {
-  // 当我们写一个库文件的时候要进行如下配置：
+  "presets": [
+    [
+      "@babel/env",
+      {
+        // 为低版本引入babel/polyfill
+        "targets": {
+          "edge": "17",
+          "firefox": "60",
+          "chrome": "67",
+          "safari": "11.1",
+        },
+        // 使用useBuiltIns要指定corejs
+        "corejs": "2",
+        // 只对项目中用到的`esnext`语法进行polyfill处理
+        "useBuiltIns": "usage",
+      }
+    ],
+    // 这里的配置顺序也和loader一样，从下到上
+    "@babel/preset-react"
+  ],
+  // 当我们写一个库文件的时候要在plugins中添加如下配置：
   // 并根据官网安装如下依赖： https://babeljs.io/docs/en/babel-plugin-transform-runtime
   // @babel/plugin-transform-runtime
   // @babel/runtime
@@ -16,30 +36,7 @@
   //     }
   //   ]
   // ]
-  // 这样配置之后，Promise, map等语法并没有进行转换为es5，而国产浏览器和低版本浏览器并不支持
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "edge": "17",
-          "firefox": "60",
-          "chrome": "67",
-          "safari": "11.1",
-        },
-        // https://github.com/vuejs/vuepress/issues/1471
-        // 消除corejs的警告
-        "corejs": "3.0.0",
-        // https://www.babeljs.cn/docs/usage
-        // 只对我们用到的语法添加polyfill
-        "useBuiltIns": "usage"
-      }
-    ],
-    // 要注意这里的顺序问题，和loader一样，从下到上，从右到左
-    "@babel/preset-react"
-  ],
   "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties"
   ]
 }

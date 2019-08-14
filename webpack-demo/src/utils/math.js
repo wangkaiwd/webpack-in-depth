@@ -1,8 +1,14 @@
-export const add = (a, b) => {
-  console.log('add')
-  return a + b;
+import _ from 'lodash'
+const add = () => {
+  console.log('add');
 }
-export const minus = (a, b) => {
-  console.log('minus')
-  return a - b
+
+const minus = () => {
+  console.log('minus');
 }
+const join = () => {
+  const array = _.join('123', '-');
+  console.log(array)
+}
+console.log('math')
+export { add, minus, join }
